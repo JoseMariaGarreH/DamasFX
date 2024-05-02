@@ -1,0 +1,33 @@
+/* Estilo básico para el Label */
+#btnRegister {
+    -fx-transition: -fx-border-color 0.3s, -fx-text-fill 0.3s; /* Efecto de transición suave */
+    -fx-text-fill: black; /* Color del texto por defecto */
+}
+
+/* Estilo para cuando el ratón pasa por encima */
+#btnRegister:hover {
+    -fx-border-color: black; /* Cambia el borde inferior a rojo */
+    -fx-border-width: 0 0 2px 0; /* Borde solo en la parte inferior */
+    -fx-border-style: solid;
+    -fx-text-fill: black; /* Cambia el color del texto a azul */
+}
+
+#rightPanel{
+    -fx-background-color: linear-gradient(to right, #a1ffc8, #0c7aee);
+}
+
+#registerPanel{
+    -fx-background-color: linear-gradient(to right, #a1ffc8, #0c7aee);
+}
+
+.button:pressed {
+    -fx-background-color: #4354ff;
+}
+
+
+#title{
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2d2d2d;
+    -fx-padding: 10px;
+}

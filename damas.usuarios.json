@@ -1,0 +1,153 @@
+[{
+  "_id": {
+    "$oid": "658016c95af984554a03bc54"
+  },
+  "login": "JBT36K",
+  "password": "prueba01",
+  "nombre": "Juan Buenaventura",
+  "apellidos": "Benítez Torres"
+},
+{
+  "_id": {
+    "$oid": "65801e965af984554a03bc55"
+  },
+  "login": "PBJ23P",
+  "password": "prueba01",
+  "nombre": "pablo Antonio",
+  "apellidos": "Bonet Jiménez"
+},
+{
+  "_id": {
+    "$oid": "65801eca5af984554a03bc56"
+  },
+  "login": "JCG77K",
+  "password": "prueba01",
+  "nombre": "Javier",
+  "apellidos": "Cortés Gómez"
+},
+{
+  "_id": {
+    "$oid": "65801ee35af984554a03bc57"
+  },
+  "login": "FGA88N",
+  "password": "prueba01",
+  "nombre": "Francisco",
+  "apellidos": "García Albaladejo"
+},
+{
+  "_id": {
+    "$oid": "65801f2a5af984554a03bc59"
+  },
+  "login": "JGH56A",
+  "password": "prueba01",
+  "nombre": "José María",
+  "apellidos": "Garre Hermosilla"
+},
+{
+  "_id": {
+    "$oid": "65801f575af984554a03bc5a"
+  },
+  "login": "DGC14A",
+  "password": "prueba01",
+  "nombre": "David",
+  "apellidos": "González Cañavate"
+},
+{
+  "_id": {
+    "$oid": "65801f6e5af984554a03bc5b"
+  },
+  "login": "AHE11H",
+  "password": "prueba01",
+  "nombre": "Antonio",
+  "apellidos": "Hernández Engui"
+},
+{
+  "_id": {
+    "$oid": "65801f8a5af984554a03bc5c"
+  },
+  "login": "PHM89Y",
+  "password": "prueba01",
+  "nombre": "Pedro José",
+  "apellidos": "Hernández Montoya"
+},
+{
+  "_id": {
+    "$oid": "65801fa35af984554a03bc5d"
+  },
+  "login": "JLG31J",
+  "password": "prueba01",
+  "nombre": "José Alberto",
+  "apellidos": "Laria González"
+},
+{
+  "_id": {
+    "$oid": "65801fd05af984554a03bc5e"
+  },
+  "login": "JLG09D",
+  "password": "prueba01",
+  "nombre": "José Ramón",
+  "apellidos": "López Guillén"
+},
+{
+  "_id": {
+    "$oid": "65801fdc5af984554a03bc5f"
+  },
+  "login": "DMG98H",
+  "password": "prueba01",
+  "nombre": "Daniel",
+  "apellidos": "Marín Guillén"
+},
+{
+  "_id": {
+    "$oid": "65801ffa5af984554a03bc60"
+  },
+  "login": "MMZ53K",
+  "password": "prueba01",
+  "nombre": "Mohamed",
+  "apellidos": "Meziane Zaid"
+},
+{
+  "_id": {
+    "$oid": "658020165af984554a03bc61"
+  },
+  "login": "PML01H",
+  "password": "prueba01",
+  "nombre": "Pablo",
+  "apellidos": "Morán López"
+},
+{
+  "_id": {
+    "$oid": "658020345af984554a03bc62"
+  },
+  "login": "AP85W",
+  "password": "prueba01",
+  "nombre": "Andrea",
+  "apellidos": "Papa"
+},
+{
+  "_id": {
+    "$oid": "6580206e5af984554a03bc63"
+  },
+  "login": "RPG76A",
+  "password": "prueba01",
+  "nombre": "Rubén",
+  "apellidos": "Pardo García"
+},
+{
+  "_id": {
+    "$oid": "658020885af984554a03bc64"
+  },
+  "login": "DQL47T",
+  "password": "prueba01",
+  "nombre": "Daniel",
+  "apellidos": "Quintero Librero"
+},
+{
+  "_id": {
+    "$oid": "658020a65af984554a03bc65"
+  },
+  "login": "ARG70A",
+  "password": "prueba01",
+  "nombre": "Antonio",
+  "apellidos": "Ruíz García"
+}]
