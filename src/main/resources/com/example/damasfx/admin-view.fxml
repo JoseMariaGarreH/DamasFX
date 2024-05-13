@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="borderPaneMain" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.damasfx.Controlador.AdminController">
+    <left>
+        <VBox fx:id="menuNavegacion" prefHeight="579.0" prefWidth="156.0" BorderPane.alignment="CENTER">
+            <children>
+                <VBox alignment="CENTER" prefHeight="195.0" prefWidth="156.0">
+                    <children>
+                        <ImageView fx:id="inputImagen" fitHeight="122.0" fitWidth="107.0" pickOnBounds="true" preserveRatio="true">
+                            <VBox.margin>
+                                <Insets top="15.0" />
+                            </VBox.margin>
+                        </ImageView>
+                        <Label fx:id="outputName" alignment="CENTER" text="Label">
+                            <VBox.margin>
+                                <Insets top="5.0" />
+                            </VBox.margin>
+                        </Label>
+                    </children>
+                </VBox>
+                <VBox alignment="CENTER" prefHeight="625.0" prefWidth="156.0">
+                    <children>
+                  <Button mnemonicParsing="false" onAction="#goToMenu" prefWidth="110.0" text="IR AL MENÚ">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </Button>
+                        <Button mnemonicParsing="false" onAction="#handlerAdd" prefWidth="110.0" text="AÑADIR">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#handlerModify" prefWidth="110.0" text="MODIFICAR">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                        </Button>
+                        <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handlerDelete" prefWidth="110.0" text="ELIMINAR">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                     <VBox.margin>
+                        <Insets bottom="180.0" />
+                     </VBox.margin>
+                        </Button>
+                        <Button id="btnSalir" fx:id="btnExit" maxWidth="124.0" mnemonicParsing="false" onAction="#exit" prefHeight="37.0" prefWidth="124.0" text="CERRAR SESIÓN">
+                            <VBox.margin>
+                                <Insets top="80.0" />
+                            </VBox.margin>
+                            <font>
+                                <Font name="Arial" size="12.0" />
+                            </font></Button>
+                    </children>
+                </VBox>
+            </children>
+        </VBox>
+    </left>
+    <stylesheets>
+        <URL value="@style/modelo.css" />
+    </stylesheets>
+   <center>
+      <TableView fx:id="userTable" prefHeight="600.0" prefWidth="850.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="loginColumn" prefWidth="121.0" text="Login" />
+            <TableColumn fx:id="passwordColumn" prefWidth="126.0" text="Contraseña" />
+          <TableColumn fx:id="nameColumn" prefWidth="127.0" text="Nombre" />
+            <TableColumn fx:id="surnameColumn" prefWidth="101.0" text="Apellidos" />
+            <TableColumn fx:id="dateColumn" prefWidth="175.0" text="Fecha de nacimiento" />
+            <TableColumn fx:id="emailColumn" minWidth="0.0" prefWidth="217.0" text="Correo" />
+            <TableColumn fx:id="roleColumn" prefWidth="111.0" text="Rol" />
+            <TableColumn fx:id="nacionalityColumn" minWidth="0.0" prefWidth="115.0" text="Nacionalidad" />
+        </columns>
+      </TableView>
+
+   </center>
+</BorderPane>

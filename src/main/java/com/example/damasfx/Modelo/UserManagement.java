@@ -2,9 +2,12 @@ package com.example.damasfx.Modelo;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.InsertOneResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import com.mongodb.client.result.UpdateResult;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -13,9 +16,18 @@ import static com.mongodb.client.model.Filters.*;
 public class UserManagement {
     private static final String TABLE_NAME = "signed";
     private static MongoCollection<User> userCollection;
+    private User currentUser;
 
     public UserManagement(MongoDatabase db) {
         userCollection = db.getCollection(TABLE_NAME, User.class);
+    }
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
     }
 
     public ObservableList getUserCollection() {
@@ -28,14 +40,28 @@ public class UserManagement {
         return user;
     }
 
-    public void insertNewUser (User newUser) {
+    public Boolean insertNewUser (User newUser) {
         InsertOneResult x = userCollection.insertOne(newUser);
-        x.wasAcknowledged();
+        return x.wasAcknowledged();
     }
 
+    public boolean modifyUser(User newUser) {
+        UpdateResult ur = userCollection.replaceOne(eq("_id",newUser.getId()),newUser);
+        return ur.wasAcknowledged();
+    }
+
+    public boolean deleteUser(User newUser) {
+        DeleteResult dr = userCollection.deleteOne(eq("login",newUser.getLogin()));
+        return dr.wasAcknowledged();
+    }
 
     public Boolean verifyUser(User newUser){
         String login = newUser.getLogin();
+
+        if(newUser.getLogin() == null){
+            return false;
+        }
+
         User existingUser = userCollection.find((eq("login", login)), User.class).first();
         return existingUser == null;
     }

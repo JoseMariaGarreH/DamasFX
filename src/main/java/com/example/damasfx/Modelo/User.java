@@ -2,26 +2,33 @@ package com.example.damasfx.Modelo;
 
 import org.bson.types.ObjectId;
 
+import java.util.Date;
+
 public class User {
     private ObjectId id;
     private String login;
     private String name;
     private String surname;
+    private RoleType roleType;
+    private Date dateofBirth;
     private String password;
     private String email;
+    private ResidenceCountry nacionality;
+
 
     public User(){
     }
-    public User(String login, String name,String surname ,String password, String email, ResidenceCountry nacionality) {
+
+    public User(String login, String name, String surname, RoleType roleType, Date dateOfbirth, String password, String email, ResidenceCountry nacionality) {
         this.login = login;
         this.name = name;
         this.surname = surname;
+        this.roleType = roleType;
+        this.dateofBirth = dateOfbirth;
         this.password = password;
         this.email = email;
         this.nacionality = nacionality;
     }
-
-    private ResidenceCountry nacionality;
 
     public ObjectId getId() {
         return id;
@@ -47,12 +54,28 @@ public class User {
         this.name = name;
     }
 
-    public String getApellidos() {
+    public String getSurname() {
         return surname;
     }
 
-    public void setApellidos(String surname) {
+    public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public RoleType getRoleType() {
+        return roleType;
+    }
+
+    public void setRoleType(RoleType roleType) {
+        this.roleType = roleType;
+    }
+
+    public Date getDateOfBirth() {
+        return dateofBirth;
+    }
+
+    public void setDateOfBirth(Date dateofBirth) {
+        this.dateofBirth = dateofBirth;
     }
 
     public String getPassword() {
@@ -70,6 +93,7 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
     public ResidenceCountry getNacionality() {
         return nacionality;
     }
@@ -78,13 +102,15 @@ public class User {
         this.nacionality = nacionality;
     }
 
-
-
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", login='" + login + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", role=" + roleType +
+                ", dateOfbirth=" + dateofBirth +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", nacionality=" + nacionality +

@@ -1,5 +1,7 @@
 package com.example.damasfx.Controlador;
 
+import com.example.damasfx.Modelo.RoleType;
+import com.example.damasfx.Modelo.SceneLoader;
 import com.example.damasfx.Vista.DataBase;
 import com.example.damasfx.Main;
 import com.example.damasfx.Modelo.User;
@@ -58,7 +60,12 @@ public class StartController implements Initializable {
 
         if (user != null) {
             System.out.println(user);
-            loadScene("menu-view.fxml",event);
+            userCollection.setCurrentUser(user);
+            if(user.getRoleType() != null && user.getRoleType().toString().equalsIgnoreCase(RoleType.ADMINISTRADOR.toString())) {
+                SceneLoader.loadScene("admin-view.fxml",event);
+            }else{
+                SceneLoader.loadScene("menu-view.fxml", event);
+            }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
@@ -70,23 +77,7 @@ public class StartController implements Initializable {
 
     @FXML
     public void registerScene(Event event) {
-        loadScene("register-view.fxml",event);
-    }
-
-    public void loadScene(String fxmlPath, Event event) {
-        try{
-            Stage ventana = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxmlPath));
-            Scene escena;
-            if (ventana.isMaximized()) {
-                escena = new Scene(fxmlLoader.load(), ventana.getWidth(), ventana.getHeight());
-            } else {
-                escena = new Scene(fxmlLoader.load(), 705, 420);
-            }
-            ventana.setScene(escena);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        SceneLoader.loadScene("register-view.fxml",event);
     }
 
     @FXML
@@ -115,5 +106,4 @@ public class StartController implements Initializable {
         txtPasswordNotVisible.setText("");
         chkPassword.setSelected(false);
     }
-
 }

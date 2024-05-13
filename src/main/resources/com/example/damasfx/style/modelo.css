@@ -1,33 +1,64 @@
-/* Estilo básico para el Label */
-#btnRegister {
-    -fx-transition: -fx-border-color 0.3s, -fx-text-fill 0.3s; /* Efecto de transición suave */
-    -fx-text-fill: black; /* Color del texto por defecto */
-}
-
-/* Estilo para cuando el ratón pasa por encima */
-#btnRegister:hover {
-    -fx-border-color: black; /* Cambia el borde inferior a rojo */
-    -fx-border-width: 0 0 2px 0; /* Borde solo en la parte inferior */
-    -fx-border-style: solid;
-    -fx-text-fill: black; /* Cambia el color del texto a azul */
+#windowPanel{
+    -fx-background-color: orange;
 }
 
 #rightPanel{
-    -fx-background-color: linear-gradient(to right, #a1ffc8, #0c7aee);
+    -fx-background-color: orange;
 }
 
 #registerPanel{
-    -fx-background-color: linear-gradient(to right, #a1ffc8, #0c7aee);
+    -fx-background-color: orange;
 }
 
-.button:pressed {
-    -fx-background-color: #4354ff;
+#btnRegister{
+    -fx-text-fill: black;
+    -fx-underline: false;
+    -fx-cursor: hand;
 }
 
+#btnRegister:hover{
+    -fx-text-fill: blue;
+    -fx-underline: true;
+}
+
+
+#btnExit{
+    -fx-background-color: #f44336;
+    -fx-max-width: 80px;
+    -fx-max-height: 30px;
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-padding: 5px;
+    -fx-background-radius: 3px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 15, 0, 0, 0);
+    -fx-cursor: hand;
+}
+
+#btnExit:hover {
+    -fx-background-color: #c42c2c;
+}
+
+#btnEnter {
+    -fx-background-color: #00b9ff;
+    -fx-max-width: 100px;
+    -fx-max-height: 30px;
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-padding: 5px;
+    -fx-border-radius: 3px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 15, 0, 0, 0);
+    -fx-cursor: hand; /* Cursor al pasar el ratón */
+}
+
+#btnEnter:hover {
+    -fx-background-color: #0085b9; /* Color de fondo al pasar el ratón */
+}
 
 #title{
     -fx-font-size: 24px;
+    -fx-font-family: "Droid Serif";
     -fx-font-weight: bold;
-    -fx-text-fill: #2d2d2d;
-    -fx-padding: 10px;
+    -fx-text-fill: white;
+    -fx-padding: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 15, 0, 0, 0);
 }

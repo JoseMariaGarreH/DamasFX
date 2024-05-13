@@ -1,10 +1,8 @@
 package com.example.damasfx.Controlador;
 
+import com.example.damasfx.Modelo.*;
 import com.example.damasfx.Vista.DataBase;
 import com.example.damasfx.Main;
-import com.example.damasfx.Modelo.ResidenceCountry;
-import com.example.damasfx.Modelo.User;
-import com.example.damasfx.Modelo.UserManagement;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,105 +13,107 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class RegisterController implements Initializable {
+    @FXML
+    private TextField inputAccount;
 
     @FXML
-    private TextField txtAccount;
+    private DatePicker inputDate;
+
     @FXML
-    private TextField txtName;
+    private TextField inputEmail;
+
     @FXML
-    private TextField txtSurname;
+    private ComboBox<ResidenceCountry> inputNacionality;
+
     @FXML
-    private TextField txtEmail;
+    private TextField inputName;
+
     @FXML
-    private TextField txtPassword;
+    private TextField inputPassword;
+
     @FXML
-    private ComboBox<ResidenceCountry> cmbNacionality;
+    private TextField inputSurname;
+
     ObservableList<ResidenceCountry> nacionalities = FXCollections.observableArrayList(ResidenceCountry.values());
     private UserManagement userCollection = DataBase.getInstance().getUserCollection();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.cmbNacionality.setItems(nacionalities);
-        this.cmbNacionality.setVisibleRowCount(3);
+        this.inputNacionality.setItems(nacionalities);
+        this.inputNacionality.setVisibleRowCount(3);
     }
 
     @FXML
     public void registered(ActionEvent event) {
-        String accountText = this.txtAccount.getText();
-        String nameText = this.txtName.getText();
-        String surname = this.txtSurname.getText();
-        String emailText = this.txtEmail.getText();
-        String passwordText = this.txtPassword.getText();
-        ResidenceCountry nacionalityValue = this.cmbNacionality.getValue();
+        String accountText = this.inputAccount.getText();
+        String passwordText = this.inputPassword.getText();
+        String nameText = this.inputName.getText();
+        String surname = this.inputSurname.getText();
+        String emailText = this.inputEmail.getText();
+        LocalDate localDate = this.inputDate.getValue();
 
-        boolean emptyFields = hasEmptyFields(accountText,emailText,nacionalityValue,passwordText);
+        Date date;
+        if(localDate != null) {
+            Instant instant = localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
+            date = Date.from(instant);
+        }else{
+            date = new Date();
+        }
+        ResidenceCountry nacionalityValue = this.inputNacionality.getValue();
+
+        boolean emptyFields = hasEmptyFields(accountText,passwordText,emailText);
 
         if (!emptyFields) {
-            showAlert("Error", "Todos los campos son obligatorios");
+            showAlert("Rellena los campos son obligatorios");
             return;
         }
 
-        User user = new User(accountText,nameText,surname,passwordText, emailText, nacionalityValue);
+        User user = new User(accountText,nameText,surname,RoleType.CLIENTE,date,emailText,passwordText,nacionalityValue);
 
         if (!userCollection.verifyUser(user)) {
-            showAlert("Error", "Usuario repetido");
+            showAlert("Usuario repetido");
             return;
         }
 
         if(!userCollection.verifyEmail(user)){
-            showAlert("Error", "Email no válido");
+            showAlert("Email no válido");
             return;
         }
 
         userCollection.insertNewUser(user);
-        loadScene("start-view.fxml", event);
+        SceneLoader.loadScene("start-view.fxml", event);
     }
 
-    private void showAlert(String title, String content) {
+    private void showAlert(String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText(null);
-        alert.setTitle(title);
+        alert.setTitle("Error");
         alert.setContentText(content);
         alert.showAndWait();
     }
 
-    private boolean hasEmptyFields(String accountText, String emailText, ResidenceCountry nationalityValue, String passwordText) {
+    private boolean hasEmptyFields(String accountText, String passwordText,String emailText) {
         return !accountText.trim().isEmpty() &&
                 !emailText.trim().isEmpty() &&
-                !(nationalityValue == null) &&
                 !passwordText.trim().isEmpty();
     }
 
     @FXML
     void comeBack(ActionEvent event) {
-        loadScene("start-view.fxml",event);
+        SceneLoader.loadScene("start-view.fxml",event);
     }
-
-    public void loadScene(String fxmlPath, ActionEvent event) {
-        try{
-            Stage ventana = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxmlPath));
-            Scene escena;
-            if (ventana.isMaximized()) {
-                escena = new Scene(fxmlLoader.load(), ventana.getWidth(), ventana.getHeight());
-            } else {
-                escena = new Scene(fxmlLoader.load(), 705, 420);
-            }
-            ventana.setScene(escena);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-
 }
 

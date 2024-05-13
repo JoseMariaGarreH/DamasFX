@@ -14,12 +14,13 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("start-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
+        scene.getStylesheets().addAll(this.getClass().getResource("style/modelo.css").toExternalForm());
 
         Image icon = new Image(getClass().getResourceAsStream("/com/example/damasfx/img/logo.jpg"));
         stage.getIcons().add(icon);
 
-        stage.setMinWidth(500);
-        stage.setMinHeight(400);
+        stage.setMinWidth(750);
+        stage.setMinHeight(500);
         stage.setTitle("Damas");
         stage.setResizable(false);
         stage.setScene(scene);
