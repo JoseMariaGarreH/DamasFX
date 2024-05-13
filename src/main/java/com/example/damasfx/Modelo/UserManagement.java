@@ -67,7 +67,7 @@ public class UserManagement {
     }
 
     public Boolean verifyEmail(User newUser){
-        String EMAIL_PATTERN = "^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]{2,}[.][a-zA-Z]{2,4}$";
+        String EMAIL_PATTERN = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
 
         if (newUser.getEmail() == null) {

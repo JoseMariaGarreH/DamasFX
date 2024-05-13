@@ -11,10 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -46,6 +43,14 @@ public class RegisterController implements Initializable {
 
     @FXML
     private TextField inputSurname;
+    @FXML
+    private Label labelAccount;
+
+    @FXML
+    private Label labelEmail;
+
+    @FXML
+    private Label labelPassword;
 
     ObservableList<ResidenceCountry> nacionalities = FXCollections.observableArrayList(ResidenceCountry.values());
     private UserManagement userCollection = DataBase.getInstance().getUserCollection();
@@ -64,7 +69,6 @@ public class RegisterController implements Initializable {
         String surname = this.inputSurname.getText();
         String emailText = this.inputEmail.getText();
         LocalDate localDate = this.inputDate.getValue();
-
         Date date;
         if(localDate != null) {
             Instant instant = localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
@@ -77,11 +81,23 @@ public class RegisterController implements Initializable {
         boolean emptyFields = hasEmptyFields(accountText,passwordText,emailText);
 
         if (!emptyFields) {
+            this.labelAccount.setText("Login");
+            this.labelPassword.setText("Contraseña");
+            this.labelEmail.setText("Email");
+
+            this.labelAccount.setStyle("-fx-text-fill: red");
+            this.labelPassword.setStyle("-fx-text-fill: red");
+            this.labelEmail.setStyle("-fx-text-fill: red");
+
+            this.inputAccount.setStyle("-fx-border-color: red");
+            this.inputPassword.setStyle("-fx-border-color: red");
+            this.inputEmail.setStyle("-fx-border-color: red");
+
             showAlert("Rellena los campos son obligatorios");
             return;
         }
 
-        User user = new User(accountText,nameText,surname,RoleType.CLIENTE,date,emailText,passwordText,nacionalityValue);
+        User user = new User(accountText,nameText,surname,RoleType.CLIENTE,date,passwordText,emailText,nacionalityValue);
 
         if (!userCollection.verifyUser(user)) {
             showAlert("Usuario repetido");

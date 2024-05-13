@@ -61,7 +61,7 @@ public class StartController implements Initializable {
         if (user != null) {
             System.out.println(user);
             userCollection.setCurrentUser(user);
-            if(user.getRoleType() != null && user.getRoleType().toString().equalsIgnoreCase(RoleType.ADMINISTRADOR.toString())) {
+            if(user.getRoleType() != null && user.getRoleType().toString().equalsIgnoreCase(RoleType.ADMINISTRADOR.toString()) || user.getRoleType().toString().equalsIgnoreCase(RoleType.CREADOR.toString())) {
                 SceneLoader.loadScene("admin-view.fxml",event);
             }else{
                 SceneLoader.loadScene("menu-view.fxml", event);

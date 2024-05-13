@@ -4,17 +4,16 @@ import org.bson.types.ObjectId;
 
 import java.util.Date;
 
-public class User {
+public class User implements Cloneable{
     private ObjectId id;
     private String login;
     private String name;
     private String surname;
     private RoleType roleType;
-    private Date dateofBirth;
+    private Date dateOfBirth;
     private String password;
     private String email;
     private ResidenceCountry nacionality;
-
 
     public User(){
     }
@@ -24,7 +23,7 @@ public class User {
         this.name = name;
         this.surname = surname;
         this.roleType = roleType;
-        this.dateofBirth = dateOfbirth;
+        this.dateOfBirth = dateOfbirth;
         this.password = password;
         this.email = email;
         this.nacionality = nacionality;
@@ -71,11 +70,11 @@ public class User {
     }
 
     public Date getDateOfBirth() {
-        return dateofBirth;
+        return dateOfBirth;
     }
 
     public void setDateOfBirth(Date dateofBirth) {
-        this.dateofBirth = dateofBirth;
+        this.dateOfBirth = dateofBirth;
     }
 
     public String getPassword() {
@@ -103,6 +102,21 @@ public class User {
     }
 
     @Override
+    public int hashCode() {
+        int result = 17;
+        result = 31 * result + (login != null ? login.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        return result;
+    }
+
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
@@ -110,7 +124,7 @@ public class User {
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", role=" + roleType +
-                ", dateOfbirth=" + dateofBirth +
+                ", dateOfbirth=" + dateOfBirth +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", nacionality=" + nacionality +

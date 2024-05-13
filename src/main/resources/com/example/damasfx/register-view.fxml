@@ -16,12 +16,22 @@
             <Insets />
          </VBox.margin>
       </Label>
-      <Label text="Nombre de cuenta">
+      <Label fx:id="labelAccount" text="Login">
          <VBox.margin>
-            <Insets right="350.0" />
+            <Insets right="420.0" />
          </VBox.margin>
       </Label>
       <TextField fx:id="inputAccount">
+         <VBox.margin>
+            <Insets left="175.0" right="150.0" />
+         </VBox.margin>
+      </TextField>
+      <Label fx:id="labelPassword" text="Contraseña">
+         <VBox.margin>
+            <Insets right="390.0" />
+         </VBox.margin>
+      </Label>
+      <TextField fx:id="inputPassword" prefHeight="25.0" prefWidth="470.0">
          <VBox.margin>
             <Insets left="175.0" right="150.0" />
          </VBox.margin>
@@ -46,6 +56,16 @@
             <Insets left="175.0" right="150.0" />
          </VBox.margin>
       </TextField>
+      <Label fx:id="labelEmail" text="Email">
+         <VBox.margin>
+            <Insets right="420.0" />
+         </VBox.margin>
+      </Label>
+      <TextField fx:id="inputEmail">
+         <VBox.margin>
+            <Insets left="175.0" right="150.0" />
+         </VBox.margin>
+      </TextField>
       <Label text="Fecha de nacimiento">
          <VBox.margin>
             <Insets right="340.0" />
@@ -56,26 +76,6 @@
             <Insets left="25.0" />
          </VBox.margin>
       </DatePicker>
-      <Label text="Email">
-         <VBox.margin>
-            <Insets right="420.0" />
-         </VBox.margin>
-      </Label>
-      <TextField fx:id="inputEmail">
-         <VBox.margin>
-            <Insets left="175.0" right="150.0" />
-         </VBox.margin>
-      </TextField>
-      <Label text="Contraseña">
-         <VBox.margin>
-            <Insets right="390.0" />
-         </VBox.margin>
-      </Label>
-      <TextField fx:id="inputPassword" prefHeight="25.0" prefWidth="470.0">
-         <VBox.margin>
-            <Insets left="175.0" right="150.0" />
-         </VBox.margin>
-      </TextField>
       <Label text="País de residencia">
          <VBox.margin>
             <Insets right="355.0" />
