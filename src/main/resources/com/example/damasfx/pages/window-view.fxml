@@ -6,31 +6,31 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" focusTraversable="true" maxHeight="620.0" maxWidth="461.0" minHeight="345.0" minWidth="185.0" prefHeight="620.0" prefWidth="451.0" snapToPixel="false" stylesheets="@style/modelo.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.damasfx.Controlador.WindowController">
+<AnchorPane id="AnchorPane" focusTraversable="true" maxHeight="620.0" maxWidth="461.0" minHeight="345.0" minWidth="185.0" prefHeight="620.0" prefWidth="451.0" snapToPixel="false" stylesheets="@../style/modelo.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.damasfx.Controladores.WindowController">
     <children>
       <VBox fx:id="windowPanel" alignment="CENTER_LEFT" prefHeight="620.0" prefWidth="451.0">
          <children>
-            <Label fx:id="title" text="EDITAR">
+            <Text fx:id="titleWindow" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="EDITAR">
                <VBox.margin>
-                  <Insets left="170.0" />
+                  <Insets left="180.0" />
                </VBox.margin>
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
+            </Text>
             <Label fx:id="labelAccount" text="Login">
                <VBox.margin>
                   <Insets left="20.0" top="5.0" />
                </VBox.margin>
             </Label>
-            <TextField fx:id="inputAccount">
+            <TextField fx:id="inputAccount" prefHeight="31.0" prefWidth="382.0">
                <VBox.margin>
-                  <Insets left="20.0" right="20.0" top="5.0" />
+                  <Insets left="20.0" right="30.0" top="5.0" />
                </VBox.margin>
             </TextField>
             <Label fx:id="labelPassword" text="Contraseña">
@@ -38,11 +38,24 @@
                   <Insets left="20.0" top="5.0" />
                </VBox.margin>
             </Label>
-            <TextField fx:id="inputPassword">
-               <VBox.margin>
-                  <Insets left="20.0" right="20.0" top="5.0" />
-               </VBox.margin>
-            </TextField>
+            <HBox prefHeight="30.0" prefWidth="451.0">
+               <children>
+                  <TextField fx:id="inputPassword" prefHeight="31.0" prefWidth="434.0">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <ToggleButton fx:id="btnChange" mnemonicParsing="false" onAction="#resetPassword">
+                     <graphic>
+                        <ImageView fx:id="image" fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/cambiar.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </ToggleButton>
+               </children>
+            </HBox>
             <Label fx:id="labelRole" text="Rol">
                <VBox.margin>
                   <Insets left="20.0" top="5.0" />
@@ -50,7 +63,7 @@
             </Label>
             <ComboBox fx:id="boxRole" layoutX="30.0" layoutY="356.0" prefHeight="25.0" prefWidth="412.0">
                <VBox.margin>
-                  <Insets left="20.0" top="5.0" />
+                  <Insets left="20.0" right="30.0" top="5.0" />
                </VBox.margin>
             </ComboBox>
               <Label text="Nombre">
@@ -60,7 +73,7 @@
             </Label>
               <TextField fx:id="inputName">
                <VBox.margin>
-                  <Insets left="20.0" right="20.0" top="5.0" />
+                  <Insets left="20.0" right="30.0" top="5.0" />
                </VBox.margin>
             </TextField>
               <Label text="Apellidos">
@@ -70,7 +83,7 @@
             </Label>
               <TextField fx:id="inputSurname">
                <VBox.margin>
-                  <Insets left="20.0" right="20.0" top="5.0" />
+                  <Insets left="20.0" right="30.0" top="5.0" />
                </VBox.margin>
             </TextField>
             <Label fx:id="labelEmail" text="Email">
@@ -80,7 +93,7 @@
             </Label>
             <TextField fx:id="inputEmail">
                <VBox.margin>
-                  <Insets left="20.0" right="20.0" top="5.0" />
+                  <Insets left="20.0" right="30.0" top="5.0" />
                </VBox.margin>
             </TextField>
             <Label text="Fecha de nacimiento">
@@ -90,7 +103,7 @@
             </Label>
             <DatePicker fx:id="inputDate" prefHeight="25.0" prefWidth="412.0">
                <VBox.margin>
-                  <Insets left="20.0" top="5.0" />
+                  <Insets left="20.0" right="30.0" top="5.0" />
                </VBox.margin>
             </DatePicker>
             <Label text="Nacionalidad">
@@ -100,10 +113,10 @@
             </Label>
             <ComboBox fx:id="boxNacionality" prefHeight="25.0" prefWidth="413.0">
                <VBox.margin>
-                  <Insets left="20.0" right="20.0" top="5.0" />
+                  <Insets left="20.0" right="30.0" top="5.0" />
                </VBox.margin>
             </ComboBox>
-            <HBox alignment="BOTTOM_CENTER" prefHeight="80.0" prefWidth="451.0">
+            <HBox alignment="BOTTOM_CENTER" prefHeight="67.0" prefWidth="451.0">
                <children>
                     <Button fx:id="btnEnter" mnemonicParsing="false" onAction="#save" prefHeight="25.0" prefWidth="149.0" text="Guardar">
                      <HBox.margin>

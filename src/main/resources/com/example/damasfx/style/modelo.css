@@ -1,15 +1,142 @@
-#windowPanel{
-    -fx-background-color: orange;
+/*Estilos globales*/
+#rightPanel,#registerPanel,#windowPanel, #menuNavegacion,#gameMenu, #userRating{
+    /*-fx-background-color: linear-gradient(to bottom right, #ff7f50, #ff6347, #ff4500);*/
+    -fx-background-color: #00BFFF;
 }
 
-#rightPanel{
-    -fx-background-color: orange;
+.label{
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
 }
 
-#registerPanel{
-    -fx-background-color: orange;
+.combo-box{
+     -fx-background-color: black;
+     -fx-border-radius: 2px;
+ }
+
+.combo-box .list-cell:selected {
+    -fx-text-fill: white;
 }
 
+#inputDate{
+    -fx-background-color: #2a2a2a;
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-padding: 2px;
+}
+
+#loginTitle,#registerTitle,#titleWindow {
+    -fx-font-size: 28px;
+    -fx-text-fill: white;
+    -fx-stroke: black;
+    -fx-stroke-width: 1px;
+    -fx-padding: 10px;
+    -fx-border-radius: 8px;
+}
+
+
+/*Estilo de la escena de inicio*/
+#gameTitle{
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+    -fx-padding: 10px;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+    -fx-background-color: #f0f0f0;
+}
+
+#txtAccount,#txtPasswordVisible,#txtPasswordNotVisible{
+    -fx-border-width: 3px;
+    -fx-border-color: black;
+    -fx-border-radius: 2px;
+}
+
+#chkPassword,#btnChange,#btnSettings{
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-border: none;
+    -fx-cursor: hand;
+    -fx-max-width: 30px;
+    -fx-max-height: 30px;
+}
+
+#chkPassword:hover,#btnChange:hover,#btnSettings:hover {
+    -fx-background-color: rgba(0,0,0,0.1); /* Un pequeño cambio de color al pasar el ratón */
+}
+
+#chkPassword:pressed,#btnChange:pressed,#btnSettings:hover  {
+    -fx-background-color: rgba(0,0,0,0.2); /* Cambio de color al presionar */
+}
+
+/*Estilo de la escena de registro*/
+#inputAccount,#inputPassword,#inputEmail,#inputName,#inputSurname {
+    -fx-border-width: 3px;
+    -fx-border-color: black;
+    -fx-border-radius: 2px;
+}
+
+#inputDate{
+    -fx-background-color: black;
+}
+
+/*Estilo de la escena del menu*/
+#menuTitle{
+    -fx-font-size: 32px;
+    -fx-font-family: "Copperplate Gothic Bold";
+    -fx-stroke: #6b6b6b;
+    -fx-stroke-width: 1.5px;
+    -fx-padding: 12px;
+    -fx-border-radius: 10px;
+    -fx-background-color:
+            linear-gradient(from 0% 0% to 100% 100%, #3e3e3e, #1c1c1c),
+            radial-gradient(center 50% 50%, radius 100%, #4f4f4f, #2a2a2a);
+    -fx-border-color: #8b4513; /* Color marrón cobre para el borde */
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.75), 5, 0, 0, 1);
+}
+
+#menuScene{
+    -fx-background-image: url('file:src/main/resources/com/example/damasfx/img/fondo_para_juego.jpg');
+    -fx-background-size: cover;
+    -fx-background-position: center;
+}
+
+#btnPlay{
+    -fx-background-color: #46dc14;
+    -fx-max-width: 80px;
+    -fx-max-height: 30px;
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-padding: 5px;
+    -fx-background-radius: 3px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 15, 0, 0, 0);
+    -fx-cursor: hand;
+}
+
+#btnPlay:hover{
+    -fx-background-color: #2f9a0e;
+}
+
+#btnOption{
+    -fx-background-color: #14a0dc;
+    -fx-max-width: 120px;
+    -fx-max-height: 30px;
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-padding: 5px;
+    -fx-background-radius: 3px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 15, 0, 0, 0);
+    -fx-cursor: hand;
+}
+
+#btnOption:hover{
+    -fx-background-color: #0f739b;
+}
+
+/*Botones de confirmar, registrar y salir*/
 #btnRegister{
     -fx-text-fill: black;
     -fx-underline: false;
@@ -21,9 +148,8 @@
     -fx-underline: true;
 }
 
-
 #btnExit{
-    -fx-background-color: #f44336;
+    -fx-background-color: #DC143C;
     -fx-max-width: 80px;
     -fx-max-height: 30px;
     -fx-text-fill: white;
@@ -35,11 +161,11 @@
 }
 
 #btnExit:hover {
-    -fx-background-color: #c42c2c;
+    -fx-background-color: #ab112e;
 }
 
-#btnEnter {
-    -fx-background-color: #00b9ff;
+#btnEnter,#btnReset {
+    -fx-background-color: #32CD32;
     -fx-max-width: 100px;
     -fx-max-height: 30px;
     -fx-text-fill: white;
@@ -47,18 +173,108 @@
     -fx-padding: 5px;
     -fx-border-radius: 3px;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 15, 0, 0, 0);
-    -fx-cursor: hand; /* Cursor al pasar el ratón */
+    -fx-cursor: hand;
 }
 
 #btnEnter:hover {
-    -fx-background-color: #0085b9; /* Color de fondo al pasar el ratón */
+    -fx-background-color: #239123; /* Color de fondo al pasar el ratón */
 }
 
-#title{
-    -fx-font-size: 24px;
-    -fx-font-family: "Droid Serif";
-    -fx-font-weight: bold;
+#userTable,#scoreTable {
+    -fx-border-color: #0080FF; /* Borde color Azure */
+    -fx-border-width: 2px; /* Ancho del borde */
+    -fx-background-color: #E0FFFF; /* Fondo color Light Cyan (suave para contraste) */
+    -fx-padding: 10px; /* Relleno */
+    -fx-table-cell-border-color: transparent; /* Sin borde en celdas */
+}
+
+#scoreTable .column-header {
+    -fx-background-color: #00BFFF; /* Fondo del encabezado color Deep Sky Blue */
+    -fx-text-fill: #FFFFFF; /* Texto del encabezado blanco */
+    -fx-font-weight: bold; /* Texto en negrita */
+}
+
+#scoreTable .table-row-cell:selected {
+    -fx-background-color: #FF8C00; /* Fondo de filas seleccionadas color Dark Orange */
+    -fx-text-fill: #FFFFFF; /* Texto de filas seleccionadas blanco */
+}
+
+#userTable .column-header {
+    -fx-background-color: #00BFFF; /* Fondo del encabezado color Deep Sky Blue */
+    -fx-text-fill: #FFFFFF; /* Texto del encabezado blanco */
+    -fx-font-weight: bold; /* Texto en negrita */
+}
+
+#userTable .table-row-cell:selected {
+    -fx-background-color: #FF8C00; /* Fondo de filas seleccionadas color Dark Orange */
+    -fx-text-fill: #FFFFFF; /* Texto de filas seleccionadas blanco */
+}
+
+#btnDelete {
+    -fx-background-color: #e74c3c; /* Rojo brillante */
+    -fx-max-width: 80px;
+    -fx-max-height: 30px;
     -fx-text-fill: white;
+    -fx-font-size: 15px;
     -fx-padding: 5px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 15, 0, 0, 0);
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 10, 0, 0, 0);
+    -fx-cursor: hand;
+}
+
+#btnDelete:hover {
+    -fx-background-color: #c0392b; /* Rojo oscuro */
+}
+
+#btnModify {
+    -fx-background-color: #3498db; /* Azul claro */
+    -fx-max-width: 90px;
+    -fx-max-height: 30px;
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-padding: 5px;
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 10, 0, 0, 0);
+    -fx-cursor: hand;
+}
+
+#btnModify:hover {
+    -fx-background-color: #2980b9; /* Azul más oscuro */
+}
+
+#btnAdd {
+    -fx-background-color: #2ecc71; /* Verde brillante */
+    -fx-max-width: 90px;
+    -fx-max-height: 30px;
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-padding: 5px;
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 10, 0, 0, 0);
+    -fx-cursor: hand;
+}
+
+#btnAdd:hover {
+    -fx-background-color: #27ae60; /* Verde más oscuro */
+}
+
+#btnGo {
+    -fx-background-color: #9b59b6; /* Púrpura brillante */
+    -fx-max-width: 100px;
+    -fx-max-height: 30px;
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-padding: 5px;
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 10, 0, 0, 0);
+    -fx-cursor: hand;
+}
+
+#btnGo:hover {
+    -fx-background-color: #8e44ad; /* Púrpura más oscuro */
+}
+
+#root{
+    -fx-border-color: black; /* Azul marino para el borde */
+    -fx-border-width: 0 0 0 3px; /* Ancho del borde izquierdo */
 }

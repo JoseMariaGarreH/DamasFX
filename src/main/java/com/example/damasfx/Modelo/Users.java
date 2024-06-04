@@ -1,10 +1,12 @@
 package com.example.damasfx.Modelo;
 
+import com.example.damasfx.Enumerados.ResidenceCountry;
+import com.example.damasfx.Enumerados.RoleType;
 import org.bson.types.ObjectId;
 
 import java.util.Date;
 
-public class User implements Cloneable{
+public class Users implements Cloneable{
     private ObjectId id;
     private String login;
     private String name;
@@ -14,11 +16,14 @@ public class User implements Cloneable{
     private String password;
     private String email;
     private ResidenceCountry nacionality;
+    private Scores scores;
 
-    public User(){
+    public Users(){
+        this.id = new ObjectId();
     }
 
-    public User(String login, String name, String surname, RoleType roleType, Date dateOfbirth, String password, String email, ResidenceCountry nacionality) {
+    public Users(String login, String name, String surname, RoleType roleType, Date dateOfbirth, String password, String email, ResidenceCountry nacionality,Scores scores) {
+        this.id = new ObjectId();
         this.login = login;
         this.name = name;
         this.surname = surname;
@@ -27,6 +32,7 @@ public class User implements Cloneable{
         this.password = password;
         this.email = email;
         this.nacionality = nacionality;
+        this.scores = scores;
     }
 
     public ObjectId getId() {
@@ -101,6 +107,14 @@ public class User implements Cloneable{
         this.nacionality = nacionality;
     }
 
+    public Scores getScores() {
+        return scores;
+    }
+
+    public void setScores(Scores scores) {
+        this.scores = scores;
+    }
+
     @Override
     public int hashCode() {
         int result = 17;
@@ -109,7 +123,6 @@ public class User implements Cloneable{
         result = 31 * result + (password != null ? password.hashCode() : 0);
         return result;
     }
-
 
     @Override
     public Object clone() throws CloneNotSupportedException {

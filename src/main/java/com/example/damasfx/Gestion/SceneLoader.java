@@ -1,4 +1,4 @@
-package com.example.damasfx.Modelo;
+package com.example.damasfx.Gestion;
 
 import com.example.damasfx.Main;
 import javafx.event.Event;

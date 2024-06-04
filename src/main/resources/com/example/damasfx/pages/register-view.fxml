@@ -8,14 +8,15 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 
-<VBox fx:id="registerPanel" alignment="CENTER" prefHeight="600.0" prefWidth="800.0" stylesheets="@style/modelo.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.damasfx.Controlador.RegisterController">
+<VBox fx:id="registerPanel" alignment="CENTER" prefHeight="700.0" prefWidth="900.0" stylesheets="@../style/modelo.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.damasfx.Controladores.RegisterController">
    <children>
-      <Label fx:id="title" text="CREAR CUENTA">
+      <Text fx:id="registerTitle" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="CREAR CUENTA">
          <VBox.margin>
-            <Insets />
+            <Insets bottom="25.0" />
          </VBox.margin>
-      </Label>
+      </Text>
       <Label fx:id="labelAccount" text="Login">
          <VBox.margin>
             <Insets right="420.0" />
@@ -23,17 +24,17 @@
       </Label>
       <TextField fx:id="inputAccount">
          <VBox.margin>
-            <Insets left="175.0" right="150.0" />
+            <Insets left="225.0" right="198.0" />
          </VBox.margin>
       </TextField>
       <Label fx:id="labelPassword" text="Contraseña">
          <VBox.margin>
-            <Insets right="390.0" />
+            <Insets right="385.0" />
          </VBox.margin>
       </Label>
       <TextField fx:id="inputPassword" prefHeight="25.0" prefWidth="470.0">
          <VBox.margin>
-            <Insets left="175.0" right="150.0" />
+            <Insets left="225.0" right="198.0" />
          </VBox.margin>
       </TextField>
       <Label text="Nombre">
@@ -43,17 +44,17 @@
       </Label>
       <TextField fx:id="inputName">
          <VBox.margin>
-            <Insets left="175.0" right="150.0" />
+            <Insets left="225.0" right="198.0" />
          </VBox.margin>
       </TextField>
       <Label text="Apellidos">
          <VBox.margin>
-            <Insets right="400.0" />
+            <Insets right="395.0" />
          </VBox.margin>
       </Label>
       <TextField fx:id="inputSurname">
          <VBox.margin>
-            <Insets left="175.0" right="150.0" />
+            <Insets left="225.0" right="198.0" />
          </VBox.margin>
       </TextField>
       <Label fx:id="labelEmail" text="Email">
@@ -63,22 +64,22 @@
       </Label>
       <TextField fx:id="inputEmail">
          <VBox.margin>
-            <Insets left="175.0" right="150.0" />
+            <Insets left="225.0" right="198.0" />
          </VBox.margin>
       </TextField>
       <Label text="Fecha de nacimiento">
          <VBox.margin>
-            <Insets right="340.0" />
+            <Insets right="335.0" />
          </VBox.margin>
       </Label>
-      <DatePicker fx:id="inputDate" prefHeight="25.0" prefWidth="475.0">
+      <DatePicker fx:id="inputDate" prefHeight="25.0" prefWidth="476.0">
          <VBox.margin>
             <Insets left="25.0" />
          </VBox.margin>
       </DatePicker>
       <Label text="País de residencia">
          <VBox.margin>
-            <Insets right="355.0" />
+            <Insets right="350.0" />
          </VBox.margin>
       </Label>
       <ComboBox fx:id="inputNacionality" prefHeight="25.0" prefWidth="477.0">
