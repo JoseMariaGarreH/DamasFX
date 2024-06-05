@@ -5,6 +5,7 @@
 }
 
 .label{
+    -fx-font-size: 14px;
     -fx-font-weight: bold;
     -fx-text-fill: black;
 }
@@ -29,7 +30,7 @@
     -fx-font-size: 28px;
     -fx-text-fill: white;
     -fx-stroke: black;
-    -fx-stroke-width: 1px;
+    -fx-stroke-width: 2px;
     -fx-padding: 10px;
     -fx-border-radius: 8px;
 }
@@ -38,7 +39,7 @@
 /*Estilo de la escena de inicio*/
 #gameTitle{
     -fx-border-color: black;
-    -fx-border-width: 2px;
+    -fx-border-width: 3px;
     -fx-padding: 10px;
     -fx-font-size: 20px;
     -fx-font-weight: bold;
@@ -106,7 +107,7 @@
 
 #btnPlay{
     -fx-background-color: #46dc14;
-    -fx-max-width: 80px;
+    -fx-max-width: 110px;
     -fx-max-height: 30px;
     -fx-text-fill: white;
     -fx-font-size: 15px;
@@ -122,7 +123,7 @@
 
 #btnOption{
     -fx-background-color: #14a0dc;
-    -fx-max-width: 120px;
+    -fx-max-width: 110px;
     -fx-max-height: 30px;
     -fx-text-fill: white;
     -fx-font-size: 15px;
@@ -150,7 +151,7 @@
 
 #btnExit{
     -fx-background-color: #DC143C;
-    -fx-max-width: 80px;
+    -fx-max-width: 110px;
     -fx-max-height: 30px;
     -fx-text-fill: white;
     -fx-font-size: 15px;
@@ -166,7 +167,7 @@
 
 #btnEnter,#btnReset {
     -fx-background-color: #32CD32;
-    -fx-max-width: 100px;
+    -fx-max-width: 110px;
     -fx-max-height: 30px;
     -fx-text-fill: white;
     -fx-font-size: 15px;
@@ -176,7 +177,7 @@
     -fx-cursor: hand;
 }
 
-#btnEnter:hover {
+#btnEnter:hover,#btnReset:hover {
     -fx-background-color: #239123; /* Color de fondo al pasar el ratón */
 }
 
@@ -212,7 +213,7 @@
 
 #btnDelete {
     -fx-background-color: #e74c3c; /* Rojo brillante */
-    -fx-max-width: 80px;
+    -fx-max-width: 110px;
     -fx-max-height: 30px;
     -fx-text-fill: white;
     -fx-font-size: 15px;
@@ -228,7 +229,7 @@
 
 #btnModify {
     -fx-background-color: #3498db; /* Azul claro */
-    -fx-max-width: 90px;
+    -fx-max-width: 110px;
     -fx-max-height: 30px;
     -fx-text-fill: white;
     -fx-font-size: 15px;
@@ -244,7 +245,7 @@
 
 #btnAdd {
     -fx-background-color: #2ecc71; /* Verde brillante */
-    -fx-max-width: 90px;
+    -fx-max-width: 110px;
     -fx-max-height: 30px;
     -fx-text-fill: white;
     -fx-font-size: 15px;
@@ -260,7 +261,7 @@
 
 #btnGo {
     -fx-background-color: #9b59b6; /* Púrpura brillante */
-    -fx-max-width: 100px;
+    -fx-max-width: 110px;
     -fx-max-height: 30px;
     -fx-text-fill: white;
     -fx-font-size: 15px;

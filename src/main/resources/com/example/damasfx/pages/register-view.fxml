@@ -19,82 +19,82 @@
       </Text>
       <Label fx:id="labelAccount" text="Login">
          <VBox.margin>
-            <Insets right="420.0" />
+            <Insets right="435.0" />
          </VBox.margin>
       </Label>
       <TextField fx:id="inputAccount">
          <VBox.margin>
-            <Insets left="225.0" right="198.0" />
+            <Insets left="212.0" right="186.0" />
          </VBox.margin>
       </TextField>
       <Label fx:id="labelPassword" text="Contraseña">
          <VBox.margin>
-            <Insets right="385.0" />
+            <Insets right="400.0" />
          </VBox.margin>
       </Label>
       <TextField fx:id="inputPassword" prefHeight="25.0" prefWidth="470.0">
          <VBox.margin>
-            <Insets left="225.0" right="198.0" />
+            <Insets left="212.0" right="186.0" />
          </VBox.margin>
       </TextField>
       <Label text="Nombre">
          <VBox.margin>
-            <Insets right="405.0" />
+            <Insets right="420.0" />
          </VBox.margin>
       </Label>
       <TextField fx:id="inputName">
          <VBox.margin>
-            <Insets left="225.0" right="198.0" />
+            <Insets left="212.0" right="186.0" />
          </VBox.margin>
       </TextField>
       <Label text="Apellidos">
          <VBox.margin>
-            <Insets right="395.0" />
+            <Insets right="415.0" />
          </VBox.margin>
       </Label>
       <TextField fx:id="inputSurname">
          <VBox.margin>
-            <Insets left="225.0" right="198.0" />
+            <Insets left="212.0" right="186.0" />
          </VBox.margin>
       </TextField>
       <Label fx:id="labelEmail" text="Email">
          <VBox.margin>
-            <Insets right="420.0" />
+            <Insets right="440.0" />
          </VBox.margin>
       </Label>
-      <TextField fx:id="inputEmail">
+      <TextField fx:id="inputEmail" prefHeight="31.0" prefWidth="541.0">
          <VBox.margin>
-            <Insets left="225.0" right="198.0" />
+            <Insets left="212.0" right="186.0" />
          </VBox.margin>
       </TextField>
       <Label text="Fecha de nacimiento">
          <VBox.margin>
-            <Insets right="335.0" />
+            <Insets right="340.0" />
          </VBox.margin>
       </Label>
-      <DatePicker fx:id="inputDate" prefHeight="25.0" prefWidth="476.0">
+      <DatePicker fx:id="inputDate" prefHeight="29.0" prefWidth="501.0">
          <VBox.margin>
             <Insets left="25.0" />
          </VBox.margin>
       </DatePicker>
       <Label text="País de residencia">
          <VBox.margin>
-            <Insets right="350.0" />
+            <Insets right="360.0" />
          </VBox.margin>
       </Label>
-      <ComboBox fx:id="inputNacionality" prefHeight="25.0" prefWidth="477.0">
+      <ComboBox fx:id="inputNacionality" prefHeight="25.0" prefWidth="499.0">
          <VBox.margin>
             <Insets bottom="60.0" left="25.0" />
          </VBox.margin>
       </ComboBox>
-      <HBox alignment="CENTER" prefHeight="0.0" prefWidth="500.0">
+      <HBox alignment="CENTER" prefHeight="38.0" prefWidth="900.0">
          <children>
-            <Button fx:id="btnEnter" mnemonicParsing="false" onAction="#registered" text="Confirmar">
+            <Button fx:id="btnEnter" maxHeight="31.0" mnemonicParsing="false" onAction="#registered" prefHeight="31.0" prefWidth="110.0" text="Confirmar">
                <HBox.margin>
                   <Insets right="15.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="btnExit" mnemonicParsing="false" onAction="#comeBack" text="Volver" />
+            <Button fx:id="btnExit" maxHeight="31.0" mnemonicParsing="false" onAction="#comeBack" prefHeight="31.0" prefWidth="110.0" text="Volver" />
          </children>
       </HBox>
    </children>

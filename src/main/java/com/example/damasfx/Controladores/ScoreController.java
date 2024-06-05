@@ -2,9 +2,11 @@ package com.example.damasfx.Controladores;
 
 import com.example.damasfx.Gestion.SceneLoader;
 import com.example.damasfx.Modelo.Scores;
-import com.example.damasfx.Gestion.ScoresManagement;
 import com.example.damasfx.Gestion.UserManagement;
+import com.example.damasfx.Modelo.Users;
 import com.example.damasfx.VDataBase.DataBase;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,29 +23,36 @@ import java.util.ResourceBundle;
 public class ScoreController implements Initializable {
     private static final Logger logger = LogManager.getLogger(ScoreController.class);
     @FXML
-    private TableColumn<Scores, Integer> scoreColumn;
-    @FXML
-    private TableColumn<Scores, String> playerColumn;
-    @FXML
-    private TableView<Scores> scoreTable;
-    @FXML
     private Label name;
+
     @FXML
     private Label score;
-    private ScoresManagement scoreCollection = DataBase.getInstance().getScoreCollection();
-    private UserManagement userCollection = DataBase.getInstance().getUserCollection();
+
+    @FXML
+    private TableView<Users> scoreTable;
+
+    @FXML
+    private TableColumn<Users, String> playerColumn;
+
+    @FXML
+    private TableColumn<Users, Integer> scoreColumn;
+
+    private UserManagement userCollection;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        UserManagement sesionManagement = new UserManagement();
-        userCollection.setCurrentUser(userCollection.getUserById(sesionManagement.getLoggedInUser()));
-        name.setText(userCollection.getCurrentUser().getLogin());
-        score.setText(String.valueOf(userCollection.getCurrentUser().getScores().getScore()));
+        UserManagement sessionManagement = new UserManagement();
+        userCollection = new UserManagement();  // Inicializar userCollection correctamente
+        userCollection.setCurrentUser(userCollection.getUserById(sessionManagement.getLoggedInUser()));
 
-        playerColumn.setCellValueFactory(new PropertyValueFactory<>("userName"));
-        scoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
+        Users currentUser = userCollection.getCurrentUser();
+        name.setText(currentUser.getLogin());
+        score.setText(String.valueOf(currentUser.getScores().getScore()));
 
-        scoreTable.setItems(scoreCollection.getScoreCollection());
+        playerColumn.setCellValueFactory(new PropertyValueFactory<>("login"));
+        scoreColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getScores().getScore()).asObject());
+
+        scoreTable.setItems(FXCollections.observableArrayList(userCollection.getUserCollection()));
     }
 
     @FXML

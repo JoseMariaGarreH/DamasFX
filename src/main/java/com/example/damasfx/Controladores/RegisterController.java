@@ -3,7 +3,6 @@ package com.example.damasfx.Controladores;
 import com.example.damasfx.Enumerados.ResidenceCountry;
 import com.example.damasfx.Enumerados.RoleType;
 import com.example.damasfx.Gestion.SceneLoader;
-import com.example.damasfx.Gestion.ScoresManagement;
 import com.example.damasfx.Gestion.UserManagement;
 import com.example.damasfx.Modelo.*;
 import com.example.damasfx.VDataBase.DataBase;
@@ -43,7 +42,6 @@ public class RegisterController implements Initializable {
     @FXML private Label labelPassword;
     private ObservableList<ResidenceCountry> nacionalities = FXCollections.observableArrayList(ResidenceCountry.values());
     private UserManagement userCollection = DataBase.getInstance().getUserCollection();
-    private ScoresManagement scoreCollection = DataBase.getInstance().getScoreCollection();
     private Properties properties = new Properties();
     private Pattern emailPattern;
     private int minPasswordLength;
@@ -107,7 +105,7 @@ public class RegisterController implements Initializable {
         user.setEmail(emailText);
         user.setNacionality(nationality);
 
-        Scores scores = new Scores(scoreId, user.getId().toString(), 0, user.getLogin());
+        Scores scores = new Scores(scoreId, 0);
 
         user.setScores(scores);
 
@@ -117,7 +115,6 @@ public class RegisterController implements Initializable {
 
         logger.info("El usuario se ha insertado correctamente");
         userCollection.insertNewUser(user);
-        scoreCollection.insertNewScore(scores);
 
         // Cargar la siguiente escena
         SceneLoader.loadScene("pages/start-view.fxml", event);

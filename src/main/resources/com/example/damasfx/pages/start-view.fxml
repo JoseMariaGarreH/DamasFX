@@ -16,19 +16,19 @@
 
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" stylesheets="@../style/modelo.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.damasfx.Controladores.StartController">
    <children>
-      <VBox fx:id="vboxMain" alignment="CENTER" prefHeight="700.0" prefWidth="403.0" spacing="20.0" stylesheets="@../style/modelo.css">
+      <VBox fx:id="vboxMain" alignment="CENTER" prefHeight="700.0" prefWidth="563.0" spacing="20.0" stylesheets="@../style/modelo.css">
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
          <children>
-            <Text fx:id="loginTitle" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="INCIO DE SESIÓN">
+            <Text fx:id="loginTitle" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="INICIO DE SESIÓN">
                <VBox.margin>
                   <Insets bottom="40.0" />
                </VBox.margin>
             </Text>
             <HBox alignment="CENTER" prefHeight="30.0" prefWidth="264.0" VBox.vgrow="NEVER">
                <children>
-                  <Label prefHeight="17.0" prefWidth="90.0" text="Nombre cuenta">
+                  <Label prefHeight="30.0" prefWidth="151.0" text="Nombre cuenta">
                      <HBox.margin>
                         <Insets left="10.0" right="30.0" />
                      </HBox.margin>
@@ -45,18 +45,18 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="25.0" prefWidth="336.0">
                <children>
-                  <Label prefHeight="17.0" prefWidth="72.0" text="Contraseña">
+                  <Label prefHeight="30.0" prefWidth="110.0" text="Contraseña">
                      <HBox.margin>
-                        <Insets left="11.0" />
+                        <Insets left="20.0" />
                      </HBox.margin>
                   </Label>
-                  <AnchorPane prefHeight="25.0" prefWidth="179.0" HBox.hgrow="ALWAYS">
+                  <AnchorPane prefHeight="31.0" prefWidth="228.0" HBox.hgrow="ALWAYS">
                      <children>
                         <TextField fx:id="txtPasswordVisible" layoutX="48.0" prefHeight="20.0" prefWidth="155.0" />
                         <PasswordField fx:id="txtPasswordNotVisible" layoutX="48.0" prefHeight="20.0" prefWidth="155.0" />
                      </children>
                      <HBox.margin>
-                        <Insets />
+                        <Insets left="23.0" />
                      </HBox.margin>
                   </AnchorPane>
                   <ToggleButton fx:id="chkPassword" mnemonicParsing="false" onAction="#showPassword">
@@ -73,15 +73,7 @@
                   </ToggleButton>
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="28.0" prefWidth="319.0">
-               <children>
-                  <Button fx:id="btnEnter" onAction="#logIn" text="Iniciar sesión">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </Button>
-               </children>
-            </HBox>
+            <Button fx:id="btnEnter" onAction="#logIn" text="Iniciar sesión" />
             <Separator prefHeight="14.0" prefWidth="319.0" />
             <HBox alignment="CENTER" prefHeight="32.0" prefWidth="319.0">
                <children>
@@ -100,7 +92,7 @@
       </VBox>
       <AnchorPane fx:id="rightPanel" prefHeight="700.0" prefWidth="550.0">
          <children>
-            <Label fx:id="gameTitle" layoutX="198.0" layoutY="323.0" prefHeight="24.0" prefWidth="129.0" text="DAMAS FX" />
+            <Label fx:id="gameTitle" layoutX="158.0" layoutY="323.0" prefHeight="24.0" prefWidth="129.0" text="DAMAS FX" />
          </children></AnchorPane>
    </children>
 </HBox>

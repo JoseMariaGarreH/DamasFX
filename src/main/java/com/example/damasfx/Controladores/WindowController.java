@@ -256,7 +256,7 @@ public class WindowController implements Initializable {
         newUser.setDateOfBirth(date);
         newUser.setEmail(email);
         newUser.setNacionality(country);
-        newUser.setScores(new Scores(scoreId,newUser.getId().toString(), 0, newUser.getLogin()));
+        newUser.setScores(new Scores(scoreId,0));
 
         if (checkUserEmail(newUser)) {
             currentUser = newUser;

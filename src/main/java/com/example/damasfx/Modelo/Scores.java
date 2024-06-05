@@ -24,29 +24,11 @@ public class Scores {
         this.score = score;
     }
 
-    public String  getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String  userId) {
-        this.userId = userId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
     public Scores(){
     }
-    public Scores(ObjectId id,String userId, int score, String userName) {
+    public Scores(ObjectId id, int score) {
         this.id = id;
-        this.userId = userId;
         this.score = score;
-        this.userName = userName;
     }
 }
 

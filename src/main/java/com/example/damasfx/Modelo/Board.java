@@ -7,8 +7,8 @@ import javafx.scene.shape.Rectangle;
 
 public class Board extends StackPane {
     private Piece piece;
-    private static final int WIDTH = 135;
-    private static final int HEIGHT = 115;
+    private static final int WIDTH = 195;
+    private static final int HEIGHT = 135;
     private boolean isSelected;
     private PlayController playController;
 
@@ -47,7 +47,7 @@ public class Board extends StackPane {
 
     public void highlight() {
         isSelected = true;
-        setOpacity(0.7);
+        setOpacity(0.5);
     }
 
     public void clearHighlight() {

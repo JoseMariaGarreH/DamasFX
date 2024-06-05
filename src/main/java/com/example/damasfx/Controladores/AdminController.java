@@ -3,7 +3,6 @@ package com.example.damasfx.Controladores;
 import com.example.damasfx.Enumerados.ActionType;
 import com.example.damasfx.Main;
 import com.example.damasfx.Gestion.SceneLoader;
-import com.example.damasfx.Gestion.ScoresManagement;
 import com.example.damasfx.Gestion.UserManagement;
 import com.example.damasfx.Modelo.*;
 import com.example.damasfx.VDataBase.DataBase;
@@ -55,7 +54,6 @@ public class AdminController implements Initializable {
     private TableView<Users> userTable;
     private Properties properties = new Properties();
     private UserManagement userCollection = DataBase.getInstance().getUserCollection();
-    private ScoresManagement scoreCollection = DataBase.getInstance().getScoreCollection();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -114,7 +112,6 @@ public class AdminController implements Initializable {
                     ObservableList<Users> data = userTable.getItems();
                     logger.info("Se ha añadido el usuario " + u.getName() + " " + u.getSurname());
                     data.add(u);
-                    scoreCollection.insertNewScore(new Scores(u.getScores().getId(),u.getId().toString(), 0, u.getLogin()));
                 }
             }
 
@@ -190,7 +187,6 @@ public class AdminController implements Initializable {
                 ObservableList<Users> data = userTable.getItems();
                 logger.info("Se ha eliminado el usuario " + u.getName() + " " + u.getSurname());
                 data.remove(u);
-                scoreCollection.deleteScore(u);
                 userTable.getSelectionModel().clearSelection();
                 showAlert(Alert.AlertType.INFORMATION, "Info", properties.getProperty("deleted_user_correctly"));
             }

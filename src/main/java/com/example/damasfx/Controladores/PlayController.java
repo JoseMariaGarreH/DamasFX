@@ -2,18 +2,22 @@ package com.example.damasfx.Controladores;
 
 import com.example.damasfx.Enumerados.PieceType;
 import com.example.damasfx.Gestion.SceneLoader;
-import com.example.damasfx.Gestion.ScoresManagement;
 import com.example.damasfx.Gestion.UserManagement;
 import com.example.damasfx.Modelo.*;
 import com.example.damasfx.VDataBase.DataBase;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -33,7 +37,6 @@ public class PlayController implements Initializable {
     private static Board selectedTile = null;
     private static PieceType currentPlayer = PieceType.RED;
     private UserManagement userCollection = DataBase.getInstance().getUserCollection();
-    private ScoresManagement scoreCollection = DataBase.getInstance().getScoreCollection();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -119,7 +122,6 @@ public class PlayController implements Initializable {
             System.out.println("Movimiento inválido de (" + fromX + ", " + fromY + ") a (" + toX + ", " + toY + ")");
         }
     }
-
 
     private void checkForDraw() {
         int redPieces = countPieces(PieceType.RED);
@@ -215,13 +217,25 @@ public class PlayController implements Initializable {
     }
 
     private void showDraw() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Fin del juego");
-        alert.setHeaderText(null);
-        alert.setContentText("¡El juego termina en empate ya que no se pueden realizar mas movimientos!");
+        Stage dialogStage = new Stage();
+        dialogStage.initModality(Modality.APPLICATION_MODAL);
+        dialogStage.initOwner(root.getScene().getWindow());
+        dialogStage.initStyle(StageStyle.UNDECORATED);
 
-        alert.showAndWait();
-        resetGame();
+        VBox vbox = new VBox(10);
+        vbox.setStyle("-fx-padding: 10;");
+        Label message = new Label("¡El juego termina en empate ya que no se pueden realizar más movimientos!");
+        Button okButton = new Button("OK");
+        okButton.setOnAction(e -> {
+            dialogStage.close();
+            resetGame();
+        });
+
+        vbox.getChildren().addAll(message, okButton);
+
+        Scene scene = new Scene(vbox);
+        dialogStage.setScene(scene);
+        dialogStage.showAndWait();
     }
 
     private boolean hasValidMoves(PieceType player) {
@@ -271,7 +285,6 @@ public class PlayController implements Initializable {
         currentScores.setScore(newScore);
         user.setScores(currentScores);
         userCollection.modifyUser(user);
-        scoreCollection.modifyScore(currentScores);
     }
 
     private void addNewScore() {
@@ -282,7 +295,6 @@ public class PlayController implements Initializable {
         currentScores.setScore(newScore);
         user.setScores(currentScores);
         userCollection.modifyUser(user);
-        scoreCollection.modifyScore(currentScores);
     }
 
     private int countPieces(PieceType type) {
@@ -298,13 +310,26 @@ public class PlayController implements Initializable {
     }
 
     private void showWinner(PieceType winner) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Fin del juego");
-        alert.setHeaderText(null);
-        alert.setContentText("¡Las fichas " + (winner == PieceType.RED ? "Rojas han ganado, has perdido 20 puntos" : "Blancas han ganado, has ganado 100 puntos"));
+        Stage dialogStage = new Stage();
+        dialogStage.initModality(Modality.APPLICATION_MODAL);
+        dialogStage.initOwner(root.getScene().getWindow());
+        dialogStage.initStyle(StageStyle.UNDECORATED);
 
-        alert.showAndWait();
-        resetGame();
+        VBox vbox = new VBox(10);
+        vbox.setStyle("-fx-padding: 10;");
+        String winnerText = (winner == PieceType.RED) ? "Rojas han ganado, has perdido 20 puntos" : "Blancas han ganado, has ganado 100 puntos";
+        Label message = new Label("¡Las fichas " + winnerText);
+        Button okButton = new Button("OK");
+        okButton.setOnAction(e -> {
+            dialogStage.close();
+            resetGame();
+        });
+
+        vbox.getChildren().addAll(message, okButton);
+
+        Scene scene = new Scene(vbox);
+        dialogStage.setScene(scene);
+        dialogStage.showAndWait();
     }
 
     private void resetGame() {

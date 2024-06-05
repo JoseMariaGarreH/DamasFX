@@ -1,6 +1,5 @@
 package com.example.damasfx.VDataBase;
 
-import com.example.damasfx.Gestion.ScoresManagement;
 import com.example.damasfx.Gestion.UserManagement;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
@@ -21,7 +20,6 @@ public class DataBase {
     private MongoClient mongoClient;
     private MongoDatabase mongoDatabase;
     private UserManagement userCollection;
-    private ScoresManagement scoreCollection;
 
 
     private DataBase() {
@@ -46,14 +44,10 @@ public class DataBase {
 
         System.out.println("--Conectando con la colección USUARIOS");
         userCollection = new UserManagement(mongoDatabase);
-
-        System.out.println("--Conectando con la colección PUNTUACIONES");
-        scoreCollection = new ScoresManagement(mongoDatabase);
     }
     public UserManagement getUserCollection() {
         return userCollection;
     }
-    public ScoresManagement getScoreCollection(){return scoreCollection;};
     public static DataBase getInstance() {
         if (instance == null) {
             instance = new DataBase();

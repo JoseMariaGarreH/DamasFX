@@ -11,35 +11,35 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1200.0" stylesheets="@../style/modelo.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.damasfx.Controladores.PlayController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="950.0" prefWidth="1300.0" stylesheets="@../style/modelo.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.damasfx.Controladores.PlayController">
     <children>
         <BorderPane prefHeight="200.0" prefWidth="200.0">
             <center>
                 <GridPane fx:id="root" alignment="CENTER" gridLinesVisible="true" BorderPane.alignment="CENTER">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints percentWidth="12.5" />
+                        <ColumnConstraints percentWidth="12.5" />
+                        <ColumnConstraints percentWidth="12.5" />
+                        <ColumnConstraints percentWidth="12.5" />
+                        <ColumnConstraints percentWidth="12.5" />
+                        <ColumnConstraints percentWidth="12.5" />
+                        <ColumnConstraints percentWidth="12.5" />
+                        <ColumnConstraints percentWidth="12.5" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints percentHeight="12.5" />
+                        <RowConstraints percentHeight="12.5" />
+                        <RowConstraints percentHeight="12.5" />
+                        <RowConstraints percentHeight="12.5" />
+                        <RowConstraints percentHeight="12.5" />
+                        <RowConstraints percentHeight="12.5" />
+                        <RowConstraints percentHeight="12.5" />
+                        <RowConstraints percentHeight="12.5" />
                     </rowConstraints>
                 </GridPane>
             </center>
             <left>
-                <VBox fx:id="gameMenu" alignment="CENTER" prefHeight="900.0" prefWidth="233.0" BorderPane.alignment="CENTER">
+                <VBox fx:id="gameMenu" alignment="CENTER" prefHeight="950.0" prefWidth="375.0" BorderPane.alignment="CENTER">
                     <children>
                         <Circle fx:id="turnIndicatorCircle" fill="RED" radius="50.0" />
                         <Label fx:id="turnIndicatorLabel" text="Turno: Rojo">
