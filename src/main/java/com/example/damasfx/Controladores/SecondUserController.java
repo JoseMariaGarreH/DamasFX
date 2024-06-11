@@ -26,20 +26,12 @@ import static javafx.scene.input.KeyCode.*;
 
 public class SecondUserController implements Initializable {
     private static final Logger logger = LogManager.getLogger(StartController.class);
-    @FXML
-    private ToggleButton togglePassword;
 
-    @FXML
-    private ImageView image;
-
-    @FXML
-    private TextField txtAccount;
-
-    @FXML
-    private PasswordField txtPasswordNotVisible;
-
-    @FXML
-    private TextField txtPasswordVisible;
+    @FXML private ToggleButton togglePassword;
+    @FXML private ImageView image;
+    @FXML private TextField txtAccount;
+    @FXML private PasswordField txtPasswordNotVisible;
+    @FXML private TextField txtPasswordVisible;
 
     private UserManagement userCollection = DataBase.getInstance().getUserCollection();
     private Properties properties = new Properties();
@@ -55,7 +47,8 @@ public class SecondUserController implements Initializable {
     }
 
     private void loadProperties() {
-        try (InputStream input = SecondUserController.class.getClassLoader().getResourceAsStream("general.properties")) {
+        try {
+            InputStream input = SecondUserController.class.getClassLoader().getResourceAsStream("general.properties");
             properties.load(input);
         } catch (IOException ex) {
             logger.error("Error cargando fichero de propiedades", ex);
@@ -85,7 +78,7 @@ public class SecondUserController implements Initializable {
                 userCollection.setSecondUser(secondUser);
 
                 logger.info("El usuario ha entrado a la zona de administración correctamente");
-                SceneLoader.loadScene("pages/play-view.fxml", event);
+                SceneLoader.loadScene(properties.getProperty("play_view"), event);
             }
         } else {
             logger.warn("El nombre de la cuenta o la contraseña introducidas por el usuario son incorrectas");
@@ -104,7 +97,7 @@ public class SecondUserController implements Initializable {
     @FXML
     void registerScene(MouseEvent event) {
         logger.info("El usuario se ha dirigido a la zona de registro");
-        SceneLoader.loadScene("pages/register-view.fxml", event);
+        SceneLoader.loadScene(properties.getProperty("register_view"), event);
     }
 
     @FXML
@@ -143,6 +136,6 @@ public class SecondUserController implements Initializable {
     @FXML
     public void comeBack(ActionEvent event) {
         logger.info("El usuario se ha dirigido a la zona de registro");
-        SceneLoader.loadScene("pages/menu-view.fxml", event);
+        SceneLoader.loadScene(properties.getProperty("menu_view"), event);
     }
 }

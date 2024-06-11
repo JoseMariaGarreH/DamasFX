@@ -160,7 +160,7 @@ public class WindowController implements Initializable {
 
         if (hasEmptyFields(login, email, password)) {
             highlightEmptyFields();
-            displayAlert(Alert.AlertType.ERROR, "Error", properties.getProperty("alert_empty_fields"));
+            showAlert(Alert.AlertType.ERROR, "Error", properties.getProperty("alert_empty_fields"));
             logger.warn("No se han rellenado los campos obligatorios en el apartado de registro");
             return;
         }
@@ -168,7 +168,7 @@ public class WindowController implements Initializable {
         if (!emailPattern.matcher(email).matches()) {
             labelEmail.setStyle("-fx-text-fill: red");
             inputEmail.setStyle("-fx-border-color: red");
-            displayAlert(Alert.AlertType.ERROR, "Error", properties.getProperty("alert_duplicate_email"));
+            showAlert(Alert.AlertType.ERROR, "Error", properties.getProperty("alert_incorrect_email"));
             logger.warn("El email o la contraseña no son válidos");
             return;
         }
@@ -177,13 +177,13 @@ public class WindowController implements Initializable {
 
         if (currentUser != null) {
             if (updateUserDetails(login, password, role, name, surname, date, email, country)) {
-                displayAlert(Alert.AlertType.INFORMATION, "Información", properties.getProperty("modified_user_correctly"));
+                showAlert(Alert.AlertType.INFORMATION, "Información", properties.getProperty("modified_user_correctly"));
                 logger.info("Se han modificado correctamente los datos del usuario");
                 closeWindow();
             }
         } else {
             if (createUser(login, password, role, name, surname, date, email, country)) {
-                displayAlert(Alert.AlertType.INFORMATION, "Información", properties.getProperty("added_user_correctly"));
+                showAlert(Alert.AlertType.INFORMATION, "Información", properties.getProperty("added_user_correctly"));
                 logger.info("Se ha insertado al usuario correctamente");
                 closeWindow();
             }
@@ -204,7 +204,7 @@ public class WindowController implements Initializable {
             if (!userCollection.verifyUser(currentUser)) {
                 labelAccount.setStyle("-fx-text-fill: red");
                 inputAccount.setStyle("-fx-border-color: red");
-                displayAlert(Alert.AlertType.ERROR, "Error", properties.getProperty("alert_duplicate_user"));
+                showAlert(Alert.AlertType.ERROR, "Error", properties.getProperty("alert_duplicate_user"));
                 logger.warn("El nombre de la cuenta que ha introducido el usuario ya existe");
                 return false;
             }
@@ -212,7 +212,7 @@ public class WindowController implements Initializable {
             if (!userCollection.verifyEmail(currentUser)) {
                 labelEmail.setStyle("-fx-text-fill: red");
                 inputEmail.setStyle("-fx-border-color: red");
-                displayAlert(Alert.AlertType.ERROR, "Error", properties.getProperty("alert_duplicate_email"));
+                showAlert(Alert.AlertType.ERROR, "Error", properties.getProperty("alert_duplicate_email"));
                 logger.warn("El email introducido por el usuario ya existe");
                 return false;
             }
@@ -226,14 +226,14 @@ public class WindowController implements Initializable {
         if (!userCollection.verifyUser(user)) {
             labelAccount.setStyle("-fx-text-fill: red");
             inputAccount.setStyle("-fx-border-color: red");
-            displayAlert(Alert.AlertType.ERROR, "Error", properties.getProperty("alert_duplicate_user"));
+            showAlert(Alert.AlertType.ERROR, "Error", properties.getProperty("alert_duplicate_user"));
             logger.warn("El nombre de la cuenta que ha introducido el usuario ya existe");
             hasError = true;
         }
         if (!userCollection.verifyEmail(user)) {
             labelEmail.setStyle("-fx-text-fill: red");
             inputEmail.setStyle("-fx-border-color: red");
-            displayAlert(Alert.AlertType.ERROR, "Error", properties.getProperty("alert_duplicate_email"));
+            showAlert(Alert.AlertType.ERROR, "Error", properties.getProperty("alert_duplicate_email"));
             logger.warn("El email introducido por el usuario ya existe");
             hasError = true;
         }
@@ -270,7 +270,7 @@ public class WindowController implements Initializable {
         return (localDate != null) ? Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant()) : new Date();
     }
 
-    private void displayAlert(Alert.AlertType alertType, String title, String content) {
+    private void showAlert(Alert.AlertType alertType, String title, String content) {
         Alert alert = new Alert(alertType);
         alert.setHeaderText(null);
         alert.setTitle(title);

@@ -71,7 +71,7 @@ public class StartController implements Initializable {
             userCollection.setFirstUser(firtsUser);
 
             logger.info("El usuario ha entrado a la zona de administración correctamente");
-            SceneLoader.loadScene("pages/menu-view.fxml", event);
+            SceneLoader.loadScene(properties.getProperty("menu_view"), event);
 
         } else {
             logger.warn("El nombre de la cuenta o la contraseña introducidas por el usuario son incorrectas");
@@ -90,7 +90,7 @@ public class StartController implements Initializable {
     @FXML
     public void registerScene(Event event) {
         logger.info("El usuario se ha dirigido a la zona de registro");
-        SceneLoader.loadScene("pages/register-view.fxml", event);
+        SceneLoader.loadScene(properties.getProperty("register_view"), event);
     }
 
     @FXML

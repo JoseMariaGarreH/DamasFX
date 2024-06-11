@@ -28,14 +28,14 @@ public class Main extends Application {
         FXMLLoader fxmlLoader;
         if (loggedInUser != null) {
             // Cargar la pantalla principal
-            fxmlLoader = new FXMLLoader(getClass().getResource("pages/menu-view.fxml"));
+            fxmlLoader = new FXMLLoader(getClass().getResource(properties.getProperty("menu_view")));
         } else {
-            // Cargar la pantalla de login
-            fxmlLoader = new FXMLLoader(getClass().getResource("pages/start-view.fxml"));
+            // Cargar la pantalla de loginstyle
+            fxmlLoader = new FXMLLoader(getClass().getResource(properties.getProperty("start_view")));
         }
 
         Scene scene = new Scene(fxmlLoader.load());
-        scene.getStylesheets().add(getClass().getResource("/com/example/damasfx/style/modelo.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource(properties.getProperty("style")).toExternalForm());
 
         Image icon = new Image(getClass().getResourceAsStream(properties.getProperty("application_icon")));
         stage.getIcons().add(icon);

@@ -16,7 +16,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class ScoreController implements Initializable {
@@ -40,9 +43,11 @@ public class ScoreController implements Initializable {
     private TableColumn<Users, String> rankingColumn;
 
     private UserManagement userCollection;
+    private Properties properties = new Properties();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        loadProperties();
         UserManagement sessionManagement = new UserManagement();
         userCollection = new UserManagement();  // Inicializar userCollection correctamente
         userCollection.setCurrentUser(userCollection.getUserById(sessionManagement.getLoggedInUser()));
@@ -68,10 +73,18 @@ public class ScoreController implements Initializable {
         scoreTable.sort();
     }
 
+    private void loadProperties() {
+        try (InputStream input = StartController.class.getClassLoader().getResourceAsStream("general.properties")) {
+            properties.load(input);
+        } catch (IOException ex) {
+            logger.error("Error cargando fichero de propiedades", ex);
+        }
+    }
+
     @FXML
     public void exit(ActionEvent event){
         logger.info("El usuario ha entrado al menu principal");
-        SceneLoader.loadScene("pages/menu-view.fxml",event);
+        SceneLoader.loadScene(properties.getProperty("menu_view"),event);
     }
 }
 

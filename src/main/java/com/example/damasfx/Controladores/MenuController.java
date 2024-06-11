@@ -12,7 +12,10 @@ import javafx.scene.control.Button;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class MenuController implements Initializable {
@@ -22,35 +25,46 @@ public class MenuController implements Initializable {
     private Button btnSettings;
 
     private UserManagement userCollection = DataBase.getInstance().getUserCollection();
+    private Properties properties = new Properties();
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        loadProperties();
         UserManagement sesionManagement = new UserManagement();
         userCollection.setCurrentUser(userCollection.getUserById(sesionManagement.getLoggedInUser()));
         btnSettings.setVisible(userCollection.getCurrentUser().getRoleType() == RoleType.ADMINISTRADOR || userCollection.getCurrentUser().getRoleType() == RoleType.CREADOR);
     }
+
+    private void loadProperties() {
+        try{
+            InputStream input = SecondUserController.class.getClassLoader().getResourceAsStream("general.properties");
+            properties.load(input);
+        } catch (IOException ex) {
+            logger.error("Error cargando fichero de propiedades", ex);
+        }
+    }
     @FXML
     void launchPlayScene(ActionEvent event) {
         logger.info("El usuario se ha dirigido a la pantalla de juego");
-        SceneLoader.loadScene("pages/secondUserLogin-view.fxml",event);
+        SceneLoader.loadScene(properties.getProperty("second_user_login"),event);
     }
 
     public void onExit(ActionEvent event) {
         logger.info("El usuario ha salido de la aplicación");
         userCollection.clearLoggedInUser();
-        SceneLoader.loadScene("pages/start-view.fxml",event);
+        SceneLoader.loadScene(properties.getProperty("start_view"),event);
     }
 
     @FXML
     public void scoreScene(ActionEvent event) {
         logger.info("El usuario se ha dirigido a la escena de puntuaciones del juego");
-        SceneLoader.loadScene("pages/score-view.fxml",event);
+        SceneLoader.loadScene(properties.getProperty("score_view"),event);
     }
 
     @FXML
     public void goToSettings(ActionEvent event) {
         logger.info("El usuario se ha dirigido a la escena de gestión de usuarios");
-        SceneLoader.loadScene("pages/admin-view.fxml", event);
+        SceneLoader.loadScene(properties.getProperty("admin_view"), event);
     }
 }

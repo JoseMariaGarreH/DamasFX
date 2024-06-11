@@ -26,6 +26,7 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.Properties;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 public class RegisterController implements Initializable {
     private static final Logger logger = LogManager.getLogger(RegisterController.class);
@@ -43,12 +44,12 @@ public class RegisterController implements Initializable {
     private ObservableList<ResidenceCountry> nacionalities = FXCollections.observableArrayList(ResidenceCountry.values());
     private UserManagement userCollection = DataBase.getInstance().getUserCollection();
     private Properties properties = new Properties();
-    private int minPasswordLength;
+    private Pattern emailPattern;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadProperties();
-        minPasswordLength = Integer.parseInt(properties.getProperty("min_password_length"));
+        emailPattern = Pattern.compile(properties.getProperty("email_pattern"));
         inputDate.getEditor().addEventFilter(KeyEvent.ANY, Event::consume);
         inputNacionality.setValue(ResidenceCountry.EMPTY);
         inputNacionality.setItems(nacionalities);
@@ -82,10 +83,11 @@ public class RegisterController implements Initializable {
             return;
         }
 
-        if (passwordText.length() < minPasswordLength) {
-            invalidFields(passwordText);
-            showAlert(Alert.AlertType.ERROR,"Error",properties.getProperty("alert_invalid_data"));
-            logger.warn("la contraseña no es válida");
+        if (!emailPattern.matcher(emailText).matches()) {
+            labelEmail.setStyle("-fx-text-fill: red");
+            inputEmail.setStyle("-fx-border-color: red");
+            showAlert(Alert.AlertType.ERROR, "Error", properties.getProperty("alert_incorrect_email"));
+            logger.warn("El email o la contraseña no son válidos");
             return;
         }
 
@@ -111,14 +113,7 @@ public class RegisterController implements Initializable {
         userCollection.insertNewUser(user);
 
         // Cargar la siguiente escena
-        SceneLoader.loadScene("pages/start-view.fxml", event);
-    }
-
-    private void invalidFields(String password) {
-        if (password.length() < minPasswordLength) {
-            labelPassword.setStyle("-fx-text-fill: red");
-            inputPassword.setStyle("-fx-border-color: red");
-        }
+        SceneLoader.loadScene(properties.getProperty("start_view"), event);
     }
 
     private void resetFieldStyles() {
@@ -191,10 +186,10 @@ public class RegisterController implements Initializable {
     public void comeBack(ActionEvent event) {
         if(userCollection.getUserById(userCollection.getLoggedInUser()) == null) {
             logger.info("El usuario ha vuelto a la pantalla de inicio de sesión");
-            SceneLoader.loadScene("pages/start-view.fxml", event);
+            SceneLoader.loadScene(properties.getProperty("start_view"), event);
         }else{
             logger.info("El usuario ha vuelto a la pantalla de inicio de sesión del segundo jugador");
-            SceneLoader.loadScene("pages/secondUserLogin-view.fxml", event);
+            SceneLoader.loadScene(properties.getProperty("second_user_login"), event);
         }
     }
 }

@@ -42,7 +42,7 @@ public class PlayController implements Initializable {
     private Text outputNameSecond;
     private static final int WIDTH = 8;
     private static final int HEIGHT = 8;
-    private static final int MAX_MOVES_WITHOUT_CAPTURE = 200;
+    private static final int MAX_MOVES_WITHOUT_CAPTURE = 30;
     private static final Board[][] board = new Board[WIDTH][HEIGHT];
     private static int movesWithoutCapture = 0;
     private static Board selectedTile = null;
@@ -236,12 +236,18 @@ public class PlayController implements Initializable {
         currentPlayer = (currentPlayer == PieceType.RED) ? PieceType.WHITE : PieceType.RED;
         updateTurnIndicator();
 
-        if (!hasValidMoves(currentPlayer)) {
+        boolean currentHasValidMoves = hasValidMoves(currentPlayer);
+        boolean opponentHasValidMoves = hasValidMoves(currentPlayer == PieceType.RED ? PieceType.WHITE : PieceType.RED);
+
+        if (!currentHasValidMoves && !opponentHasValidMoves) {
+            showDraw();
+        } else if (!currentHasValidMoves) {
             showWinner(currentPlayer == PieceType.RED ? PieceType.WHITE : PieceType.RED);
         } else {
             checkForDraw();
         }
     }
+
 
 
     private void updateTurnIndicator() {
@@ -254,7 +260,7 @@ public class PlayController implements Initializable {
         alert.setTitle("Empate");
         alert.setHeaderText(null);
 
-        alert.setContentText("Empate, se han realizado demasiados movimientos sin captura");
+        alert.setContentText("Empate");
 
         ImageView icon = new ImageView(new Image(getClass().getResourceAsStream("/com/example/damasfx/img/apreton.png")));
         icon.setFitHeight(64);
@@ -290,6 +296,7 @@ public class PlayController implements Initializable {
         }
         return false;
     }
+
 
     private void checkForWinner() {
         int redPieces = countPieces(PieceType.RED);

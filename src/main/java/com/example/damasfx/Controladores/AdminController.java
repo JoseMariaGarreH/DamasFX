@@ -28,8 +28,6 @@ import java.time.LocalDate;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
-import static com.mongodb.client.model.Filters.eq;
-
 public class AdminController implements Initializable {
     private static final Logger logger = LogManager.getLogger(AdminController.class);
     @FXML
