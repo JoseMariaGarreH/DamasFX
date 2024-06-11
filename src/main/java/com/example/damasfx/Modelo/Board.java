@@ -1,16 +1,19 @@
 package com.example.damasfx.Modelo;
 
 import com.example.damasfx.Controladores.PlayController;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Board extends StackPane {
     private Piece piece;
-    private static final int WIDTH = 195;
-    private static final int HEIGHT = 135;
+    private static final int WIDTH = 125;
+    private static final int HEIGHT = 120;
     private boolean isSelected;
     private PlayController playController;
+    private ImageView invalidMove;
 
     public Board(boolean light, int x, int y, PlayController playController) {
         this.playController = playController;
@@ -19,10 +22,15 @@ public class Board extends StackPane {
         border.setFill(light ? Color.BEIGE : Color.TAN);
 
         setOnMouseClicked(event -> {
-            playController.handleTileClick(this);
+            playController.clickBoard(this);
         });
 
-        getChildren().add(border);
+        invalidMove = new ImageView(new Image(getClass().getResourceAsStream("/com/example/damasfx/img/cruz.png")));
+        invalidMove.setFitWidth(100 * 0.5); // Ajustar el tamaño de la imagen
+        invalidMove.setFitHeight(100 * 0.5);
+        invalidMove.setVisible(false); // Invisible al principio
+
+        getChildren().addAll(border,invalidMove);
     }
 
     public boolean hasPiece() {
@@ -53,5 +61,13 @@ public class Board extends StackPane {
     public void clearHighlight() {
         isSelected = false;
         setOpacity(1.0);
+    }
+
+    public void showInvalidMoveIcon() {
+        invalidMove.setVisible(true);
+    }
+
+    public void hideInvalidMoveIcon() {
+        invalidMove.setVisible(false);
     }
 }

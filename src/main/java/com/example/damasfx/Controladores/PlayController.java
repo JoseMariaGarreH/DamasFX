@@ -5,43 +5,60 @@ import com.example.damasfx.Gestion.SceneLoader;
 import com.example.damasfx.Gestion.UserManagement;
 import com.example.damasfx.Modelo.*;
 import com.example.damasfx.VDataBase.DataBase;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.util.Duration;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class PlayController implements Initializable {
+    private static final Logger logger = LogManager.getLogger(PlayController.class);
     @FXML
     private GridPane root;
     @FXML
     private Circle turnIndicatorCircle;
     @FXML
     private Label turnIndicatorLabel;
+    @FXML
+    private Text outputNameFirst;
+    @FXML
+    private Text outputNameSecond;
     private static final int WIDTH = 8;
     private static final int HEIGHT = 8;
-    private static final int MAX_MOVES_WITHOUT_CAPTURE = 100;
+    private static final int MAX_MOVES_WITHOUT_CAPTURE = 200;
     private static final Board[][] board = new Board[WIDTH][HEIGHT];
     private static int movesWithoutCapture = 0;
     private static Board selectedTile = null;
     private static PieceType currentPlayer = PieceType.RED;
     private UserManagement userCollection = DataBase.getInstance().getUserCollection();
+    private Properties properties = new Properties();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        loadProperties();
         UserManagement sesionManagement = new UserManagement();
         userCollection.setCurrentUser(userCollection.getUserById(sesionManagement.getLoggedInUser()));
+        userCollection.setFirstUser(userCollection.getUserById(sesionManagement.getLoggedInUser()));
+        outputNameFirst.setText(userCollection.getFirstUser().getLogin());
+        outputNameSecond.setText(userCollection.getSecondUser().getLogin());
+
         for (int y = 0; y < HEIGHT; y++) {
             for (int x = 0; x < WIDTH; x++) {
                 Board board = new Board((x + y) % 2 == 0, x, y, this);
@@ -49,10 +66,20 @@ public class PlayController implements Initializable {
                 root.add(board, x, y);
             }
         }
-        placePieces();
+        chargePieces();
     }
 
-    private void placePieces() {
+    private void loadProperties() {
+        try{
+            InputStream input = SecondUserController.class.getClassLoader().getResourceAsStream("general.properties");
+            properties.load(input);
+        } catch (IOException ex) {
+            logger.error("Error cargando fichero de propiedades", ex);
+        }
+    }
+
+
+    private void chargePieces() {
         for (int y = 0; y < HEIGHT; y++) {
             for (int x = 0; x < WIDTH; x++) {
                 if ((x + y) % 2 != 0 && y < 3) {
@@ -67,7 +94,7 @@ public class PlayController implements Initializable {
         }
     }
 
-    public void handleTileClick(Board tile) {
+    public void clickBoard(Board tile) {
         if (tile.hasPiece()) {
             if (tile.getPiece().getType() == currentPlayer) {
                 if (selectedTile != null) {
@@ -119,7 +146,12 @@ public class PlayController implements Initializable {
                 switchTurn();
             }
         } else {
-            System.out.println("Movimiento inválido de (" + fromX + ", " + fromY + ") a (" + toX + ", " + toY + ")");
+            to.showInvalidMoveIcon();
+            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.5), event -> {
+                to.hideInvalidMoveIcon(); // Oculta el icono
+            }));
+            timeline.setCycleCount(1); // Indica que solo se debe ejecutar una vez
+            timeline.play();
         }
     }
 
@@ -127,7 +159,7 @@ public class PlayController implements Initializable {
         int redPieces = countPieces(PieceType.RED);
         int whitePieces = countPieces(PieceType.WHITE);
 
-        if (movesWithoutCapture >= MAX_MOVES_WITHOUT_CAPTURE || (redPieces <= 2 && whitePieces <= 2 && redPieces == whitePieces)) {
+        if (movesWithoutCapture >= MAX_MOVES_WITHOUT_CAPTURE || (whitePieces <= 2 && redPieces == whitePieces)) {
             showDraw();
         }
     }
@@ -211,31 +243,26 @@ public class PlayController implements Initializable {
         }
     }
 
+
     private void updateTurnIndicator() {
         turnIndicatorCircle.setFill((currentPlayer == PieceType.RED ? Color.RED : Color.WHITE));
         turnIndicatorLabel.setText("Turno: " + (currentPlayer == PieceType.RED ? "Rojo" : "Blanco"));
     }
 
     private void showDraw() {
-        Stage dialogStage = new Stage();
-        dialogStage.initModality(Modality.APPLICATION_MODAL);
-        dialogStage.initOwner(root.getScene().getWindow());
-        dialogStage.initStyle(StageStyle.UNDECORATED);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Empate");
+        alert.setHeaderText(null);
 
-        VBox vbox = new VBox(10);
-        vbox.setStyle("-fx-padding: 10;");
-        Label message = new Label("¡El juego termina en empate ya que no se pueden realizar más movimientos!");
-        Button okButton = new Button("OK");
-        okButton.setOnAction(e -> {
-            dialogStage.close();
-            resetGame();
-        });
+        alert.setContentText("Empate, se han realizado demasiados movimientos sin captura");
 
-        vbox.getChildren().addAll(message, okButton);
+        ImageView icon = new ImageView(new Image(getClass().getResourceAsStream("/com/example/damasfx/img/apreton.png")));
+        icon.setFitHeight(64);
+        icon.setFitWidth(64);
+        alert.setGraphic(icon);
 
-        Scene scene = new Scene(vbox);
-        dialogStage.setScene(scene);
-        dialogStage.showAndWait();
+        alert.showAndWait();
+        resetGame();
     }
 
     private boolean hasValidMoves(PieceType player) {
@@ -269,33 +296,37 @@ public class PlayController implements Initializable {
         int whitePieces = countPieces(PieceType.WHITE);
 
         if (redPieces == 0) {
+            updateScores(PieceType.WHITE);
             showWinner(PieceType.WHITE);
-            addNewScore();
         } else if (whitePieces == 0) {
+            updateScores(PieceType.RED);
             showWinner(PieceType.RED);
-            subtractScore();
         }
     }
 
-    private void subtractScore(){
-        Users user = userCollection.getCurrentUser();
-        Scores currentScores = user.getScores();
-        int currentScore = currentScores.getScore();
-        int newScore = currentScore - 20;
-        currentScores.setScore(newScore);
-        user.setScores(currentScores);
-        userCollection.modifyUser(user);
+
+    private void updateScores(PieceType winner) {
+        Users firstUser = userCollection.getFirstUser();
+        Users secondUser = userCollection.getSecondUser();
+
+        int firstUserScore = firstUser.getScore();
+        int secondUserScore = secondUser.getScore();
+
+        if (winner == PieceType.WHITE) {
+            firstUserScore = Math.max(0, firstUserScore + 3);
+            secondUserScore = Math.max(0, secondUserScore - 1);
+        } else if (winner == PieceType.RED) {
+            firstUserScore = Math.max(0, firstUserScore - 1);
+            secondUserScore = Math.max(0, secondUserScore + 3);
+        }
+
+        firstUser.setScore(firstUserScore);
+        secondUser.setScore(secondUserScore);
+
+        userCollection.modifyUser(firstUser);
+        userCollection.modifyUser(secondUser);
     }
 
-    private void addNewScore() {
-        Users user = userCollection.getCurrentUser();
-        Scores currentScores = user.getScores();
-        int currentScore = currentScores.getScore();
-        int newScore = currentScore + 100;
-        currentScores.setScore(newScore);
-        user.setScores(currentScores);
-        userCollection.modifyUser(user);
-    }
 
     private int countPieces(PieceType type) {
         int count = 0;
@@ -310,26 +341,19 @@ public class PlayController implements Initializable {
     }
 
     private void showWinner(PieceType winner) {
-        Stage dialogStage = new Stage();
-        dialogStage.initModality(Modality.APPLICATION_MODAL);
-        dialogStage.initOwner(root.getScene().getWindow());
-        dialogStage.initStyle(StageStyle.UNDECORATED);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Victoria");
 
-        VBox vbox = new VBox(10);
-        vbox.setStyle("-fx-padding: 10;");
-        String winnerText = (winner == PieceType.RED) ? "Rojas han ganado, has perdido 20 puntos" : "Blancas han ganado, has ganado 100 puntos";
-        Label message = new Label("¡Las fichas " + winnerText);
-        Button okButton = new Button("OK");
-        okButton.setOnAction(e -> {
-            dialogStage.close();
-            resetGame();
-        });
+        String winnerText = (winner == PieceType.RED) ? "Rojas han ganado se llevan 3 puntos y las Blancas pierden 1 punto" : "Blancas han ganado se llevan 3 puntos y las Rojas pierden 1 punto";
+        alert.setContentText("¡Las fichas " + winnerText + "!");
 
-        vbox.getChildren().addAll(message, okButton);
+        ImageView icon = new ImageView(new Image(getClass().getResourceAsStream("/com/example/damasfx/img/copa.png")));
+        icon.setFitHeight(64);
+        icon.setFitWidth(64);
+        alert.setGraphic(icon);
 
-        Scene scene = new Scene(vbox);
-        dialogStage.setScene(scene);
-        dialogStage.showAndWait();
+        alert.showAndWait();
+        resetGame();
     }
 
     private void resetGame() {
@@ -338,7 +362,7 @@ public class PlayController implements Initializable {
                 board[x][y].removePiece();
             }
         }
-        placePieces();
+        chargePieces();
         currentPlayer = PieceType.RED;
         updateTurnIndicator();
     }
@@ -348,6 +372,6 @@ public class PlayController implements Initializable {
     }
 
     public void onExit(ActionEvent event) {
-        SceneLoader.loadScene("pages/menu-view.fxml", event);
+        SceneLoader.loadScene(properties.getProperty("menu_view"), event);
     }
 }

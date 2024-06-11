@@ -16,13 +16,12 @@ public class Users implements Cloneable{
     private String password;
     private String email;
     private ResidenceCountry nacionality;
-    private Scores scores;
+    private int score;
 
     public Users(){
         this.id = new ObjectId();
     }
-
-    public Users(String login, String name, String surname, RoleType roleType, Date dateOfbirth, String password, String email, ResidenceCountry nacionality,Scores scores) {
+    public Users(String login, String name, String surname, RoleType roleType, Date dateOfbirth, String password, String email, ResidenceCountry nacionality,int score) {
         this.id = new ObjectId();
         this.login = login;
         this.name = name;
@@ -32,7 +31,7 @@ public class Users implements Cloneable{
         this.password = password;
         this.email = email;
         this.nacionality = nacionality;
-        this.scores = scores;
+        this.score = score;
     }
 
     public ObjectId getId() {
@@ -107,12 +106,12 @@ public class Users implements Cloneable{
         this.nacionality = nacionality;
     }
 
-    public Scores getScores() {
-        return scores;
+    public int getScore() {
+        return score;
     }
 
-    public void setScores(Scores scores) {
-        this.scores = scores;
+    public void setScore(int score) {
+        this.score = score;
     }
 
     @Override

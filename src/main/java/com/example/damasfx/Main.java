@@ -42,7 +42,7 @@ public class Main extends Application {
 
         stage.setMinWidth(750);
         stage.setMinHeight(500);
-        stage.setTitle("Damas");
+        stage.setTitle("DamasFX");
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();

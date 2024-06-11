@@ -8,6 +8,7 @@ module com.example.damasfx {
     requires java.desktop;
     requires org.apache.logging.log4j;
     requires java.prefs;
+    requires java.mail;
 
     opens com.example.damasfx to javafx.fxml;
     exports com.example.damasfx;

@@ -3,6 +3,7 @@ package com.example.damasfx.Controladores;
 import com.example.damasfx.Enumerados.RoleType;
 import com.example.damasfx.Gestion.SceneLoader;
 import com.example.damasfx.Gestion.UserManagement;
+import com.example.damasfx.Modelo.Users;
 import com.example.damasfx.VDataBase.DataBase;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,6 +23,7 @@ public class MenuController implements Initializable {
 
     private UserManagement userCollection = DataBase.getInstance().getUserCollection();
 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         UserManagement sesionManagement = new UserManagement();
@@ -31,7 +33,7 @@ public class MenuController implements Initializable {
     @FXML
     void launchPlayScene(ActionEvent event) {
         logger.info("El usuario se ha dirigido a la pantalla de juego");
-        SceneLoader.loadScene("pages/play-view.fxml",event);
+        SceneLoader.loadScene("pages/secondUserLogin-view.fxml",event);
     }
 
     public void onExit(ActionEvent event) {

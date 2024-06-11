@@ -9,13 +9,14 @@ import com.example.damasfx.VDataBase.DataBase;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.bson.types.ObjectId;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -50,15 +51,18 @@ public class WindowController implements Initializable {
     private Users originalUser;
     private ActionType actionType;
     private Pattern emailPattern;
-    private int minPasswordLength;
     private Properties properties = new Properties();
 
+    public void setActionType(ActionType actionType) {
+        this.actionType = actionType;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         loadProperties();
         emailPattern = Pattern.compile(properties.getProperty("email_pattern"));
-        minPasswordLength = Integer.parseInt(properties.getProperty("min_password_length"));
+
+        inputDate.getEditor().addEventFilter(KeyEvent.ANY, Event::consume);
 
         btnChange.setVisible(false);
         boxNacionality.setValue(ResidenceCountry.EMPTY);
@@ -74,10 +78,6 @@ public class WindowController implements Initializable {
         } catch (IOException ex) {
             logger.error("Error cargando fichero de propiedades", ex);
         }
-    }
-
-    public void setActionType(ActionType actionType) {
-        this.actionType = actionType;
     }
 
     public void initAttributes(Users user) {
@@ -132,24 +132,6 @@ public class WindowController implements Initializable {
         }
     }
 
-
-    private void highlightInvalidFields(String login, String email, String password) {
-        // Resetea todos los estilos antes de aplicar nuevas validaciones
-        resetFieldStyles();
-
-        // Validación y estilo del email
-        if (!emailPattern.matcher(email).matches()) {
-            labelEmail.setStyle("-fx-text-fill: red");
-            inputEmail.setStyle("-fx-border-color: red");
-        }
-
-        // Validación y estilo de la contraseña
-        if (password.length() < minPasswordLength) {
-            labelPassword.setStyle("-fx-text-fill: red");
-            inputPassword.setStyle("-fx-border-color: red");
-        }
-    }
-
     private void resetFieldStyles() {
         // Resetea estilos del login
         labelAccount.setStyle("-fx-text-fill: black");
@@ -183,8 +165,9 @@ public class WindowController implements Initializable {
             return;
         }
 
-        if (!emailPattern.matcher(email).matches() || password.length() < minPasswordLength) {
-            highlightInvalidFields(login, email, password);
+        if (!emailPattern.matcher(email).matches()) {
+            labelEmail.setStyle("-fx-text-fill: red");
+            inputEmail.setStyle("-fx-border-color: red");
             displayAlert(Alert.AlertType.ERROR, "Error", properties.getProperty("alert_invalid_data"));
             logger.warn("El email o la contraseña no son válidos");
             return;
@@ -193,7 +176,7 @@ public class WindowController implements Initializable {
         resetFieldStyles();
 
         if (currentUser != null) {
-            if (!updateUserDetails(login, password, role, name, surname, date, email, country)) {
+            if (updateUserDetails(login, password, role, name, surname, date, email, country)) {
                 displayAlert(Alert.AlertType.INFORMATION, "Información", properties.getProperty("modified_user_correctly"));
                 logger.info("Se han modificado correctamente los datos del usuario");
                 closeWindow();
@@ -209,7 +192,7 @@ public class WindowController implements Initializable {
 
     private boolean updateUserDetails(String login, String password, RoleType role, String name, String surname, Date date, String email, ResidenceCountry country) {
         currentUser.setLogin(login);
-        currentUser.setPassword(currentUser.getPassword().equals(password) ? password : userCollection.encryptPasswordOrDefault(password));
+        currentUser.setPassword(currentUser.getPassword().equals(password) ? password : userCollection.encryptPassword(password));
         currentUser.setRoleType(role);
         currentUser.setEmail(email);
         currentUser.setName(name);
@@ -217,7 +200,7 @@ public class WindowController implements Initializable {
         currentUser.setDateOfBirth(date);
         currentUser.setNacionality(country);
 
-        return isUserDetailsChanged(login, email) && checkUserEmail(currentUser);
+        return isUserDetailsChanged(currentUser) && checkUserEmail(currentUser);
     }
 
     private boolean checkUserEmail(Users user) {
@@ -239,24 +222,22 @@ public class WindowController implements Initializable {
         return !hasError;
     }
 
-    private boolean isUserDetailsChanged(String login, String email) {
-        return !originalUser.getLogin().equalsIgnoreCase(login) || !originalUser.getEmail().equalsIgnoreCase(email);
+    private boolean isUserDetailsChanged(Users user) {
+        return !originalUser.equals(user);
     }
 
     private boolean createUser(String login, String password, RoleType role, String name, String surname, Date date, String email, ResidenceCountry country) {
         Users newUser = new Users();
 
-        ObjectId scoreId = new ObjectId();
-
         newUser.setLogin(login);
-        newUser.setPassword(userCollection.encryptPasswordOrDefault(password));
+        newUser.setPassword(userCollection.encryptPassword(password));
         newUser.setName(name);
         newUser.setSurname(surname);
         newUser.setRoleType(role != null ? role : RoleType.CLIENTE);
         newUser.setDateOfBirth(date);
         newUser.setEmail(email);
         newUser.setNacionality(country);
-        newUser.setScores(new Scores(scoreId,0));
+        newUser.setScore(0);
 
         if (checkUserEmail(newUser)) {
             currentUser = newUser;

@@ -60,7 +60,7 @@ public class AdminController implements Initializable {
         loadProperties();
         UserManagement sesionManagement = new UserManagement();
         userCollection.setCurrentUser(userCollection.getUserById(sesionManagement.getLoggedInUser()));
-        outputName.setText(userCollection.getCurrentUser().getName());
+        outputName.setText(userCollection.getCurrentUser().getLogin());
 
         loginColumn.setCellValueFactory(new PropertyValueFactory<>("login"));
         passwordColumn.setCellValueFactory(new PropertyValueFactory<>("password"));
@@ -75,7 +75,8 @@ public class AdminController implements Initializable {
     }
 
     private void loadProperties() {
-        try (InputStream input = AdminController.class.getClassLoader().getResourceAsStream("general.properties")) {
+        try{
+            InputStream input = SecondUserController.class.getClassLoader().getResourceAsStream("general.properties");
             properties.load(input);
         } catch (IOException ex) {
             logger.error("Error cargando fichero de propiedades", ex);
@@ -86,7 +87,7 @@ public class AdminController implements Initializable {
     private void handlerAdd(ActionEvent event) {
         try {
             // Cargo la vista
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("pages/window-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource(properties.getProperty("window_view")));
 
             // Creo el Scene
             Scene scene = new Scene(loader.load());
@@ -112,6 +113,7 @@ public class AdminController implements Initializable {
                     ObservableList<Users> data = userTable.getItems();
                     logger.info("Se ha añadido el usuario " + u.getName() + " " + u.getSurname());
                     data.add(u);
+                    showAlert(Alert.AlertType.INFORMATION,"Información", properties.getProperty("added_user_correctly"));
                 }
             }
 
@@ -128,7 +130,7 @@ public class AdminController implements Initializable {
         if (u != null) {
             try {
                 // Cargo la vista
-                FXMLLoader loader = new FXMLLoader(Main.class.getResource("pages/window-view.fxml"));
+                FXMLLoader loader = new FXMLLoader(Main.class.getResource(properties.getProperty("window_view")));
 
                 // Cargo la ventana
                 Parent root = loader.load();
@@ -168,11 +170,10 @@ public class AdminController implements Initializable {
                 }
             } catch (IOException ex) {
                 logger.error("Error al cargar la pantalla de edición");
-                showAlert(Alert.AlertType.ERROR, "Error", ex.getMessage());
             }
         } else {
             logger.warn("El usuario no ha seleccionado un usuario");
-            showAlert(Alert.AlertType.ERROR, "Error", "Debes seleccionar una persona");
+            showAlert(Alert.AlertType.ERROR, "Error", properties.getProperty("unselected_user"));
         }
     }
 
@@ -192,7 +193,7 @@ public class AdminController implements Initializable {
             }
         } else {
             logger.warn("El usuario no ha seleccionado un usuario");
-            showAlert(Alert.AlertType.ERROR, "Error", "Debes seleccionar una persona");
+            showAlert(Alert.AlertType.ERROR, "Error", properties.getProperty("unselected_user"));
         }
     }
 
@@ -208,13 +209,13 @@ public class AdminController implements Initializable {
     @FXML
     public void goToMenu(ActionEvent event) {
         logger.info("El usuario ha entrado al menu principal");
-        SceneLoader.loadScene("pages/menu-view.fxml", event);
+        SceneLoader.loadScene(properties.getProperty("menu_view"), event);
     }
 
     @FXML
     public void exit(ActionEvent event) {
         logger.info("El usuario ha vuelto a la pantalla de inicio de sesión");
         userCollection.clearLoggedInUser();
-        SceneLoader.loadScene("pages/start-view.fxml", event);
+        SceneLoader.loadScene(properties.getProperty("start_view"), event);
     }
 }

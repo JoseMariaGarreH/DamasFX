@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
@@ -24,11 +25,10 @@ public class SceneLoader {
             } else {
                 escena = new Scene(fxmlLoader.load());
             }
+
             ventana.setScene(escena);
-
-            // Si se carga una escena diferente a play-view, salir de pantalla completa
-            ventana.setFullScreen(fxmlPath.equalsIgnoreCase("pages/play-view.fxml"));
-
+            ventana.sizeToScene();
+            ventana.centerOnScreen();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

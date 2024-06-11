@@ -1,7 +1,21 @@
 /*Estilos globales*/
-#rightPanel,#registerPanel,#windowPanel, #menuNavegacion,#gameMenu, #userRating{
+#registerPanel,#windowPanel, #menuNavegacion,#gameMenu, #userRating,#recoveryBox, #changePasswordBox{
     /*-fx-background-color: linear-gradient(to bottom right, #ff7f50, #ff6347, #ff4500);*/
     -fx-background-color: #00BFFF;
+}
+
+#outputNameFirst, #outputNameSecond{
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+#rightPanel{
+    -fx-background-image: url('file:src/main/resources/com/example/damasfx/img/fondo_para_juego.jpg');
+}
+
+#vboxSecondLogin{
+    -fx-background-color: #D2B48C;
 }
 
 .label{
@@ -26,7 +40,7 @@
     -fx-padding: 2px;
 }
 
-#loginTitle,#registerTitle,#titleWindow {
+#loginTitle,#registerTitle,#titleWindow,#recoveryTitle,#changePasswordTitle{
     -fx-font-size: 28px;
     -fx-text-fill: white;
     -fx-stroke: black;
@@ -53,7 +67,7 @@
     -fx-border-radius: 2px;
 }
 
-#chkPassword,#btnChange,#btnSettings{
+#chkPassword,#btnChange,#btnSettings,#togglePassword {
     -fx-background-color: transparent;
     -fx-background-repeat: no-repeat;
     -fx-background-size: contain;
@@ -73,7 +87,7 @@
 }
 
 /*Estilo de la escena de registro*/
-#inputAccount,#inputPassword,#inputEmail,#inputName,#inputSurname {
+#inputAccount,#inputPassword,#inputEmail,#inputName,#inputSurname,#inputConfirmPassword,#inputNewPassword {
     -fx-border-width: 3px;
     -fx-border-color: black;
     -fx-border-radius: 2px;
@@ -88,13 +102,10 @@
     -fx-font-size: 32px;
     -fx-font-family: "Copperplate Gothic Bold";
     -fx-stroke: #6b6b6b;
-    -fx-stroke-width: 1.5px;
+    -fx-stroke-width: 2px;
     -fx-padding: 12px;
     -fx-border-radius: 10px;
-    -fx-background-color:
-            linear-gradient(from 0% 0% to 100% 100%, #3e3e3e, #1c1c1c),
-            radial-gradient(center 50% 50%, radius 100%, #4f4f4f, #2a2a2a);
-    -fx-border-color: #8b4513; /* Color marrón cobre para el borde */
+    -fx-border-color: #8b4513;
     -fx-border-width: 2px;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.75), 5, 0, 0, 1);
 }
@@ -138,13 +149,13 @@
 }
 
 /*Botones de confirmar, registrar y salir*/
-#btnRegister{
+#btnRegister, #btnForgotPassword {
     -fx-text-fill: black;
     -fx-underline: false;
     -fx-cursor: hand;
 }
 
-#btnRegister:hover{
+#btnRegister:hover, #btnForgotPassword:hover{
     -fx-text-fill: blue;
     -fx-underline: true;
 }

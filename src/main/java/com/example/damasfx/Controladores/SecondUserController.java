@@ -1,10 +1,9 @@
 package com.example.damasfx.Controladores;
 
 import com.example.damasfx.Gestion.SceneLoader;
-import com.example.damasfx.VDataBase.DataBase;
-import com.example.damasfx.Modelo.Users;
 import com.example.damasfx.Gestion.UserManagement;
-import javafx.application.Platform;
+import com.example.damasfx.Modelo.Users;
+import com.example.damasfx.VDataBase.DataBase;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -14,7 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
+import javafx.scene.text.Text;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,28 +22,40 @@ import java.net.URL;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
-public class StartController implements Initializable {
-    private static final Logger logger = LogManager.getLogger(StartController.class);
+import static javafx.scene.input.KeyCode.*;
 
-    @FXML private ToggleButton chkPassword;
-    @FXML private TextField txtAccount;
-    @FXML private TextField txtPasswordVisible;
-    @FXML private ImageView image;
-    @FXML private PasswordField txtPasswordNotVisible;
-    @FXML private Button btnExit;
+public class SecondUserController implements Initializable {
+    private static final Logger logger = LogManager.getLogger(StartController.class);
+    @FXML
+    private ToggleButton togglePassword;
+
+    @FXML
+    private ImageView image;
+
+    @FXML
+    private TextField txtAccount;
+
+    @FXML
+    private PasswordField txtPasswordNotVisible;
+
+    @FXML
+    private TextField txtPasswordVisible;
+
     private UserManagement userCollection = DataBase.getInstance().getUserCollection();
     private Properties properties = new Properties();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadProperties();
+        UserManagement sesionManagement = new UserManagement();
+        userCollection.setFirstUser(userCollection.getUserById(sesionManagement.getLoggedInUser()));
         txtAccount.setOnKeyPressed(this::handleEnterKey);
         txtPasswordVisible.setOnKeyPressed(this::handleEnterKey);
         txtPasswordNotVisible.setOnKeyPressed(this::handleEnterKey);
     }
 
     private void loadProperties() {
-        try (InputStream input = StartController.class.getClassLoader().getResourceAsStream("general.properties")) {
+        try (InputStream input = SecondUserController.class.getClassLoader().getResourceAsStream("general.properties")) {
             properties.load(input);
         } catch (IOException ex) {
             logger.error("Error cargando fichero de propiedades", ex);
@@ -52,7 +63,7 @@ public class StartController implements Initializable {
     }
 
     private void handleEnterKey(javafx.scene.input.KeyEvent event) {
-        if (event.getCode() == KeyCode.ENTER) {
+        if (event.getCode() == ENTER) {
             logIn(event);
             event.consume();
         }
@@ -62,33 +73,36 @@ public class StartController implements Initializable {
     public void logIn(Event event) {
         String account = txtAccount.getText();
         String password = !txtPasswordVisible.getText().trim().isEmpty() ? txtPasswordVisible.getText().trim() : txtPasswordNotVisible.getText().trim();
-        Users firtsUser = userCollection.userLogin(account, password);
+        Users secondUser = userCollection.userLogin(account, password);
 
-        if (firtsUser != null) {
-            logger.info("El usuario se ha introducido correctamente a la aplicación");
-            userCollection.setCurrentUser(firtsUser);
-            userCollection.saveLoggedInUser(firtsUser.getLogin());
-            userCollection.setFirstUser(firtsUser);
+        if (secondUser != null) {
+            Users currentUser = userCollection.getFirstUser();
+            if (currentUser != null && currentUser.getLogin().equals(secondUser.getLogin())) {
+                logger.warn("El usuario que intenta iniciar sesión es el mismo que el usuario actual");
+                showAlert("Error", "No puedes iniciar sesión con el mismo usuario que ya está logueado.");
+            } else {
+                logger.info("El usuario se ha introducido correctamente a la aplicación");
+                userCollection.setSecondUser(secondUser);
 
-            logger.info("El usuario ha entrado a la zona de administración correctamente");
-            SceneLoader.loadScene("pages/menu-view.fxml", event);
-
+                logger.info("El usuario ha entrado a la zona de administración correctamente");
+                SceneLoader.loadScene("pages/play-view.fxml", event);
+            }
         } else {
             logger.warn("El nombre de la cuenta o la contraseña introducidas por el usuario son incorrectas");
-            showAlert(properties.getProperty("incorrect_current_data"));
+            showAlert("Error", properties.getProperty("incorrect_current_data"));
         }
     }
 
-    private void showAlert(String content) {
+    private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText(null);
-        alert.setTitle("Error");
+        alert.setTitle(title);
         alert.setContentText(content);
         alert.showAndWait();
     }
 
     @FXML
-    public void registerScene(Event event) {
+    void registerScene(MouseEvent event) {
         logger.info("El usuario se ha dirigido a la zona de registro");
         SceneLoader.loadScene("pages/register-view.fxml", event);
     }
@@ -96,7 +110,7 @@ public class StartController implements Initializable {
     @FXML
     public void showPassword(ActionEvent event) {
         try {
-            if (chkPassword.isSelected()) {
+            if (togglePassword.isSelected()) {
                 setPasswordVisibility(true, properties.getProperty("image_closed"));
             } else {
                 setPasswordVisibility(false, properties.getProperty("image_open"));
@@ -127,14 +141,8 @@ public class StartController implements Initializable {
     }
 
     @FXML
-    public void forgotPassword(MouseEvent event) {
-        logger.info("El usuario se ha dirigido a la escena de recuperación de contraseña");
-        SceneLoader.loadScene("pages/searchEmail-view.fxml", event);
-    }
-
-    @FXML
-    public void onExit() {
-        Stage stage = (Stage) btnExit.getScene().getWindow();
-        stage.close();
+    public void comeBack(ActionEvent event) {
+        logger.info("El usuario se ha dirigido a la zona de registro");
+        SceneLoader.loadScene("pages/menu-view.fxml", event);
     }
 }

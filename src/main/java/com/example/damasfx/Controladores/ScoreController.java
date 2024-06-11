@@ -1,11 +1,10 @@
 package com.example.damasfx.Controladores;
 
 import com.example.damasfx.Gestion.SceneLoader;
-import com.example.damasfx.Modelo.Scores;
 import com.example.damasfx.Gestion.UserManagement;
 import com.example.damasfx.Modelo.Users;
-import com.example.damasfx.VDataBase.DataBase;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -37,6 +36,9 @@ public class ScoreController implements Initializable {
     @FXML
     private TableColumn<Users, Integer> scoreColumn;
 
+    @FXML
+    private TableColumn<Users, String> rankingColumn;
+
     private UserManagement userCollection;
 
     @Override
@@ -47,12 +49,23 @@ public class ScoreController implements Initializable {
 
         Users currentUser = userCollection.getCurrentUser();
         name.setText(currentUser.getLogin());
-        score.setText(String.valueOf(currentUser.getScores().getScore()));
+        score.setText(String.valueOf(currentUser.getScore()));
 
         playerColumn.setCellValueFactory(new PropertyValueFactory<>("login"));
-        scoreColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getScores().getScore()).asObject());
+        scoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
+
+        scoreColumn.setSortable(true);
+
+        rankingColumn.setCellValueFactory(cellData -> {
+            int rank = scoreTable.getItems().indexOf(cellData.getValue()) + 1;
+            return new SimpleStringProperty(String.valueOf(rank));
+        });
 
         scoreTable.setItems(FXCollections.observableArrayList(userCollection.getUserCollection()));
+
+        scoreColumn.setSortType(TableColumn.SortType.DESCENDING);
+        scoreTable.getSortOrder().add(scoreColumn);
+        scoreTable.sort();
     }
 
     @FXML

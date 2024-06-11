@@ -29,7 +29,9 @@ public class UserManagement {
     private static final Logger logger = LogManager.getLogger(StartController.class);
     private static final String TABLE_NAME = "USERS_SIGNED";
     private static MongoCollection<Users> userCollection;
-    private Users currentUsers;
+    private Users firstUser;
+    private Users secondUser;
+    private Users currentUser;
     private static final String USERNAME_KEY = "loggedInUser";
     private final Preferences prefs;
 
@@ -54,12 +56,29 @@ public class UserManagement {
         prefs.remove(USERNAME_KEY);
     }
 
-    public Users getCurrentUser() {
-        return currentUsers;
+
+    public Users getFirstUser() {
+        return firstUser;
     }
 
-    public void setCurrentUser(Users currentUsers) {
-        this.currentUsers = currentUsers;
+    public void setFirstUser(Users firstUser) {
+        this.firstUser = firstUser;
+    }
+
+    public Users getSecondUser() {
+        return secondUser;
+    }
+
+    public void setSecondUser(Users secondUser) {
+        this.secondUser = secondUser;
+    }
+
+    public Users getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(Users currentUser) {
+        this.currentUser = currentUser;
     }
 
     public ObservableList<Users> getUserCollection() {
@@ -73,25 +92,22 @@ public class UserManagement {
     }
 
     public Users userLogin(String login, String pass) {
-        String encryptedPass = encryptPasswordOrDefault(pass);
+        String encryptedPass = encryptPassword(pass);
         return userCollection.find(and(eq("login", login.trim()), eq("password", encryptedPass))).first();
     }
 
-    public String encryptPasswordOrDefault(String password) {
+    public String encryptPassword(String password) {
         try {
-            return encryptPassword(password);
-        } catch (NoSuchAlgorithmException e) {
-            logger.error("Error al encriptar la contraseña: "+e);
-            throw new RuntimeException("Error al encriptar la contraseña"+ e);
-        }
-    }
+            MessageDigest md = MessageDigest.getInstance("SHA1");
+            md.update(password.getBytes());
+            byte[] claveEncriptada = md.digest();
 
-    public String encryptPassword(String password) throws NoSuchAlgorithmException {
-        MessageDigest md = MessageDigest.getInstance("SHA-1");  // Asegúrate de que el algoritmo está correcto
-        md.update(password.getBytes());
-        byte[] bytes = md.digest();
-        Base64.Encoder encoder = Base64.getEncoder();
-        return encoder.encodeToString(bytes);
+            Base64.Encoder encoder = Base64.getEncoder();
+            return encoder.encodeToString(claveEncriptada);
+        }catch (NoSuchAlgorithmException e){
+            logger.error("Error en la codificación de la contraseña");
+        }
+        return "contraseña-Invalida";
     }
 
     public boolean insertNewUser(Users newUsers) {
@@ -111,24 +127,15 @@ public class UserManagement {
     }
 
     public boolean verifyUser(Users newUsers) {
-        if (newUsers.getLogin() == null || newUsers.getLogin().trim().isEmpty()) {
-            return false;
-        }
         Users existingUsers = userCollection.find(eq("login", newUsers.getLogin().trim())).first();
         return existingUsers == null;
     }
 
     public boolean verifyEmail(Users newUsers) {
-        if (newUsers.getEmail() == null || newUsers.getEmail().trim().isEmpty()) {
-            return false;
-        }
-        String EMAIL_PATTERN = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
-        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
-        Matcher matcher = pattern.matcher(newUsers.getEmail().trim());
-        if (!matcher.matches()) {
-            return false;
-        }
         Users existingUsers = userCollection.find(eq("email", newUsers.getEmail().trim())).first();
         return existingUsers == null;
+    }
+    public Users searchEmail(String email){
+        return userCollection.find(eq("email", email.trim())).first();
     }
 }
