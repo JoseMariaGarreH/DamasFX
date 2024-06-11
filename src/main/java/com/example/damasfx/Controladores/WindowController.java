@@ -168,7 +168,7 @@ public class WindowController implements Initializable {
         if (!emailPattern.matcher(email).matches()) {
             labelEmail.setStyle("-fx-text-fill: red");
             inputEmail.setStyle("-fx-border-color: red");
-            displayAlert(Alert.AlertType.ERROR, "Error", properties.getProperty("alert_invalid_data"));
+            displayAlert(Alert.AlertType.ERROR, "Error", properties.getProperty("alert_duplicate_email"));
             logger.warn("El email o la contraseña no son válidos");
             return;
         }
@@ -176,7 +176,7 @@ public class WindowController implements Initializable {
         resetFieldStyles();
 
         if (currentUser != null) {
-            if (updateUserDetails(login, password, role, name, surname, date, email, country)) {
+            if (!updateUserDetails(login, password, role, name, surname, date, email, country)) {
                 displayAlert(Alert.AlertType.INFORMATION, "Información", properties.getProperty("modified_user_correctly"));
                 logger.info("Se han modificado correctamente los datos del usuario");
                 closeWindow();
@@ -200,7 +200,7 @@ public class WindowController implements Initializable {
         currentUser.setDateOfBirth(date);
         currentUser.setNacionality(country);
 
-        return isUserDetailsChanged(currentUser) && checkUserEmail(currentUser);
+        return !checkUserEmail(currentUser);
     }
 
     private boolean checkUserEmail(Users user) {
@@ -220,10 +220,6 @@ public class WindowController implements Initializable {
             hasError = true;
         }
         return !hasError;
-    }
-
-    private boolean isUserDetailsChanged(Users user) {
-        return !originalUser.equals(user);
     }
 
     private boolean createUser(String login, String password, RoleType role, String name, String surname, Date date, String email, ResidenceCountry country) {
