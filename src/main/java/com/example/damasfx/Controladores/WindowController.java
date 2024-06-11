@@ -176,7 +176,7 @@ public class WindowController implements Initializable {
         resetFieldStyles();
 
         if (currentUser != null) {
-            if (!updateUserDetails(login, password, role, name, surname, date, email, country)) {
+            if (updateUserDetails(login, password, role, name, surname, date, email, country)) {
                 displayAlert(Alert.AlertType.INFORMATION, "Información", properties.getProperty("modified_user_correctly"));
                 logger.info("Se han modificado correctamente los datos del usuario");
                 closeWindow();
@@ -200,7 +200,25 @@ public class WindowController implements Initializable {
         currentUser.setDateOfBirth(date);
         currentUser.setNacionality(country);
 
-        return !checkUserEmail(currentUser);
+        if(!originalUser.getLogin().trim().equalsIgnoreCase(currentUser.getLogin())) {
+            if (!userCollection.verifyUser(currentUser)) {
+                labelAccount.setStyle("-fx-text-fill: red");
+                inputAccount.setStyle("-fx-border-color: red");
+                displayAlert(Alert.AlertType.ERROR, "Error", properties.getProperty("alert_duplicate_user"));
+                logger.warn("El nombre de la cuenta que ha introducido el usuario ya existe");
+                return false;
+            }
+        } else if (!originalUser.getEmail().trim().equalsIgnoreCase(currentUser.getEmail())) {
+            if (!userCollection.verifyEmail(currentUser)) {
+                labelEmail.setStyle("-fx-text-fill: red");
+                inputEmail.setStyle("-fx-border-color: red");
+                displayAlert(Alert.AlertType.ERROR, "Error", properties.getProperty("alert_duplicate_email"));
+                logger.warn("El email introducido por el usuario ya existe");
+                return false;
+            }
+        }
+
+        return !originalUser.equals(currentUser);
     }
 
     private boolean checkUserEmail(Users user) {
