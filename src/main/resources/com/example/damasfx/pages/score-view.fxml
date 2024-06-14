@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox alignment="CENTER" prefHeight="700.0" prefWidth="900.0" stylesheets="@../style/modelo.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.damasfx.Controladores.ScoreController">
+<HBox alignment="CENTER" prefHeight="700.0" prefWidth="900.0" stylesheets="@../style/modelo.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.damasfx.Controllers.ScoreController">
    <VBox fx:id="userRating" alignment="CENTER" prefHeight="700.0" prefWidth="479.0">
       <children>
          <ImageView fitHeight="184.0" fitWidth="185.0" pickOnBounds="true" preserveRatio="true">

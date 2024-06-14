@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" focusTraversable="true" maxHeight="620.0" maxWidth="461.0" minHeight="345.0" minWidth="185.0" prefHeight="620.0" prefWidth="451.0" snapToPixel="false" stylesheets="@../style/modelo.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.damasfx.Controladores.WindowController">
+<AnchorPane id="AnchorPane" focusTraversable="true" maxHeight="620.0" maxWidth="461.0" minHeight="345.0" minWidth="185.0" prefHeight="620.0" prefWidth="451.0" snapToPixel="false" stylesheets="@../style/modelo.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.damasfx.Controllers.WindowController">
     <children>
       <VBox fx:id="windowPanel" alignment="CENTER_LEFT" prefHeight="620.0" prefWidth="451.0">
          <children>

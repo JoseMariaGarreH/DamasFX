@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox fx:id="registerPanel" alignment="CENTER" prefHeight="700.0" prefWidth="900.0" stylesheets="@../style/modelo.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.damasfx.Controladores.RegisterController">
+<VBox fx:id="registerPanel" alignment="CENTER" prefHeight="700.0" prefWidth="900.0" stylesheets="@../style/modelo.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.damasfx.Controllers.RegisterController">
    <children>
       <Text fx:id="registerTitle" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="CREAR CUENTA">
          <VBox.margin>

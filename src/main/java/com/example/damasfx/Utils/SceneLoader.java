@@ -1,14 +1,10 @@
-package com.example.damasfx.Gestion;
+package com.example.damasfx.Utils;
 
 import com.example.damasfx.Main;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -16,19 +12,18 @@ import java.io.IOException;
 public class SceneLoader {
     public static void loadScene(String fxmlPath, Event event) {
         try {
+            // Carga el archivo fxml
             Stage ventana = (Stage) ((Node) event.getSource()).getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxmlPath));
             Scene escena;
 
-            if (ventana.isMaximized()) {
-                escena = new Scene(fxmlLoader.load(), ventana.getWidth(), ventana.getHeight());
-            } else {
-                escena = new Scene(fxmlLoader.load());
-            }
+            // Crea la nueva escena con el tamaño por defecto del archivo FXML
+            escena = new Scene(fxmlLoader.load());
 
-            ventana.setScene(escena);
-            ventana.sizeToScene();
-            ventana.centerOnScreen();
+
+            ventana.setScene(escena); // Establece la nueva escena en la ventana actual
+            ventana.sizeToScene(); // Ajusta el tamaño de la ventana para que se ajuste al contenido de la escena
+            ventana.centerOnScreen(); // Centra la ventana en la pantalla
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

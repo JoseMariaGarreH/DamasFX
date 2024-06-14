@@ -148,7 +148,6 @@
     -fx-background-color: #0f739b;
 }
 
-/*Botones de confirmar, registrar y salir*/
 #btnRegister, #btnForgotPassword {
     -fx-text-fill: black;
     -fx-underline: false;
@@ -193,11 +192,11 @@
 }
 
 #userTable,#scoreTable {
-    -fx-border-color: #0080FF; /* Borde color Azure */
-    -fx-border-width: 2px; /* Ancho del borde */
-    -fx-background-color: #E0FFFF; /* Fondo color Light Cyan (suave para contraste) */
-    -fx-padding: 10px; /* Relleno */
-    -fx-table-cell-border-color: transparent; /* Sin borde en celdas */
+    -fx-border-color: #0080FF;
+    -fx-border-width: 2px;
+    -fx-background-color: #E0FFFF;
+    -fx-padding: 10px;
+    -fx-table-cell-border-color: transparent;
 }
 
 #scoreTable .column-header {
@@ -223,7 +222,7 @@
 }
 
 #btnDelete {
-    -fx-background-color: #e74c3c; /* Rojo brillante */
+    -fx-background-color: #e74c3c;
     -fx-max-width: 110px;
     -fx-max-height: 30px;
     -fx-text-fill: white;
@@ -235,11 +234,11 @@
 }
 
 #btnDelete:hover {
-    -fx-background-color: #c0392b; /* Rojo oscuro */
+    -fx-background-color: #c0392b;
 }
 
 #btnModify {
-    -fx-background-color: #3498db; /* Azul claro */
+    -fx-background-color: #3498db;
     -fx-max-width: 110px;
     -fx-max-height: 30px;
     -fx-text-fill: white;
@@ -251,11 +250,11 @@
 }
 
 #btnModify:hover {
-    -fx-background-color: #2980b9; /* Azul más oscuro */
+    -fx-background-color: #2980b9;
 }
 
 #btnAdd {
-    -fx-background-color: #2ecc71; /* Verde brillante */
+    -fx-background-color: #2ecc71;
     -fx-max-width: 110px;
     -fx-max-height: 30px;
     -fx-text-fill: white;
@@ -267,11 +266,11 @@
 }
 
 #btnAdd:hover {
-    -fx-background-color: #27ae60; /* Verde más oscuro */
+    -fx-background-color: #27ae60;
 }
 
 #btnGo {
-    -fx-background-color: #9b59b6; /* Púrpura brillante */
+    -fx-background-color: #9b59b6;
     -fx-max-width: 110px;
     -fx-max-height: 30px;
     -fx-text-fill: white;
@@ -283,10 +282,10 @@
 }
 
 #btnGo:hover {
-    -fx-background-color: #8e44ad; /* Púrpura más oscuro */
+    -fx-background-color: #8e44ad;
 }
 
 #root{
-    -fx-border-color: black; /* Azul marino para el borde */
+    -fx-border-color: black;
     -fx-border-width: 0 0 0 3px; /* Ancho del borde izquierdo */
 }

@@ -1,9 +1,10 @@
-package com.example.damasfx.Controladores;
+package com.example.damasfx.Controllers;
 
-import com.example.damasfx.Gestion.SceneLoader;
-import com.example.damasfx.Gestion.UserManagement;
-import com.example.damasfx.Modelo.Users;
-import com.example.damasfx.VDataBase.DataBase;
+// Importaciones necesarias para el controlador
+import com.example.damasfx.Utils.SceneLoader;
+import com.example.damasfx.Services.DataBase;
+import com.example.damasfx.Models.Users;
+import com.example.damasfx.Utils.UserManagement;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -13,7 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,80 +23,84 @@ import java.net.URL;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
-import static javafx.scene.input.KeyCode.*;
-
-public class SecondUserController implements Initializable {
+public class StartController implements Initializable {
     private static final Logger logger = LogManager.getLogger(StartController.class);
 
-    @FXML private ToggleButton togglePassword;
-    @FXML private ImageView image;
+    @FXML private ToggleButton chkPassword;
     @FXML private TextField txtAccount;
-    @FXML private PasswordField txtPasswordNotVisible;
     @FXML private TextField txtPasswordVisible;
+    @FXML private ImageView image;
+    @FXML private PasswordField txtPasswordNotVisible;
+    @FXML private Button btnExit;
 
-    private UserManagement userCollection = DataBase.getInstance().getUserCollection();
-    private Properties properties = new Properties();
+    private UserManagement userCollection = DataBase.getInstance().getUserCollection(); // Instancia de UserManagement para la gestión de usuarios
+    private Properties properties = new Properties(); // Propiedades cargadas desde un archivo de configuración
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadProperties();
-        UserManagement sesionManagement = new UserManagement();
-        userCollection.setFirstUser(userCollection.getUserById(sesionManagement.getLoggedInUser()));
+        // Asigna un evento para la tecla Enter en los campos de texto
         txtAccount.setOnKeyPressed(this::handleEnterKey);
         txtPasswordVisible.setOnKeyPressed(this::handleEnterKey);
         txtPasswordNotVisible.setOnKeyPressed(this::handleEnterKey);
     }
 
+    // Método para cargar las propiedades desde un archivo de configuración.
     private void loadProperties() {
-        try {
-            InputStream input = SecondUserController.class.getClassLoader().getResourceAsStream("general.properties");
+        try (InputStream input = StartController.class.getClassLoader().getResourceAsStream("general.properties")) {
             properties.load(input);
         } catch (IOException ex) {
             logger.error("Error cargando fichero de propiedades", ex);
         }
     }
 
+    // Manejador de eventos para detectar la tecla Enter y llamar al método de inicio de sesión
     private void handleEnterKey(javafx.scene.input.KeyEvent event) {
-        if (event.getCode() == ENTER) {
+        if (event.getCode() == KeyCode.ENTER) {
             logIn(event);
             event.consume();
         }
     }
 
+    // Método para manejar el evento de inicio de sesión
     @FXML
     public void logIn(Event event) {
+        // Obtiene el texto ingresado en los campos de cuenta y contraseña
         String account = txtAccount.getText();
         String password = !txtPasswordVisible.getText().trim().isEmpty() ? txtPasswordVisible.getText().trim() : txtPasswordNotVisible.getText().trim();
-        Users secondUser = userCollection.userLogin(account, password);
+        // Intenta iniciar sesión con los datos proporcionados
+        Users firtsUser = userCollection.userLogin(account, password);
 
-        if (secondUser != null) {
-            Users currentUser = userCollection.getFirstUser();
-            if (currentUser != null && currentUser.getLogin().equals(secondUser.getLogin())) {
-                logger.warn("El usuario que intenta iniciar sesión es el mismo que el usuario actual");
-                showAlert("Error", "No puedes iniciar sesión con el mismo usuario que ya está logueado.");
-            } else {
-                logger.info("El usuario se ha introducido correctamente a la aplicación");
-                userCollection.setSecondUser(secondUser);
+        // Si el usuario existe, procede con el inicio de sesión
+        if (firtsUser != null) {
+            logger.info("El usuario se ha introducido correctamente a la aplicación");
+            userCollection.setCurrentUser(firtsUser);
+            userCollection.saveLoggedInUser(firtsUser.getLogin());
+            userCollection.setFirstUser(firtsUser);
 
-                logger.info("El usuario ha entrado a la zona de administración correctamente");
-                SceneLoader.loadScene(properties.getProperty("play_view"), event);
-            }
+            logger.info("El usuario ha entrado a la zona de administración correctamente");
+            // Carga la escena del menú principal
+            SceneLoader.loadScene(properties.getProperty("menu_view"), event);
+
         } else {
+            // Si las credenciales son incorrectas, muestra una alerta y registra un aviso
             logger.warn("El nombre de la cuenta o la contraseña introducidas por el usuario son incorrectas");
-            showAlert("Error", properties.getProperty("incorrect_current_data"));
+            showAlert(properties.getProperty("incorrect_current_data"));
         }
     }
 
-    private void showAlert(String title, String content) {
+    // Método para mostrar una alerta con el mensaje de error
+    private void showAlert(String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText(null);
-        alert.setTitle(title);
+        alert.setTitle("Error");
         alert.setContentText(content);
         alert.showAndWait();
     }
 
+    // Método para manejar el evento de navegación a la escena de registro
     @FXML
-    void registerScene(MouseEvent event) {
+    public void registerScene(Event event) {
         logger.info("El usuario se ha dirigido a la zona de registro");
         SceneLoader.loadScene(properties.getProperty("register_view"), event);
     }
@@ -103,7 +108,8 @@ public class SecondUserController implements Initializable {
     @FXML
     public void showPassword(ActionEvent event) {
         try {
-            if (togglePassword.isSelected()) {
+            // Cambia la visibilidad de la contraseña según el estado del ToggleButton
+            if (chkPassword.isSelected()) {
                 setPasswordVisibility(true, properties.getProperty("image_closed"));
             } else {
                 setPasswordVisibility(false, properties.getProperty("image_open"));
@@ -113,6 +119,7 @@ public class SecondUserController implements Initializable {
         }
     }
 
+    // Método para establecer la visibilidad de la contraseña y cambiar la imagen del botón
     private void setPasswordVisibility(boolean visible, String imgPath) throws FileNotFoundException {
         File imgFile = new File(imgPath);
         if (!imgFile.exists()) {
@@ -133,9 +140,17 @@ public class SecondUserController implements Initializable {
         }
     }
 
+    // Método para manejar el evento de navegación a la escena de recuperación de contraseña
     @FXML
-    public void comeBack(ActionEvent event) {
-        logger.info("El usuario se ha dirigido a la zona de registro");
-        SceneLoader.loadScene(properties.getProperty("menu_view"), event);
+    public void forgotPassword(MouseEvent event) {
+        logger.info("El usuario se ha dirigido a la escena de recuperación de contraseña");
+        SceneLoader.loadScene(properties.getProperty("search_email_view"), event);
+    }
+
+    // Método para manejar el evento de salida de la aplicación
+    @FXML
+    public void onExit() {
+        Stage stage = (Stage) btnExit.getScene().getWindow();
+        stage.close();
     }
 }

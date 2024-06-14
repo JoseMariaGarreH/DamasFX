@@ -1,4 +1,4 @@
-package com.example.damasfx.Enumerados;
+package com.example.damasfx.Enums;
 
 public enum RoleType {
     CREADOR,

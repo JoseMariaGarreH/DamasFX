@@ -12,11 +12,11 @@ module com.example.damasfx {
 
     opens com.example.damasfx to javafx.fxml;
     exports com.example.damasfx;
-    exports com.example.damasfx.Controladores;
-    exports com.example.damasfx.Modelo;
-    opens com.example.damasfx.Controladores to javafx.fxml;
-    exports com.example.damasfx.VDataBase;
-    opens com.example.damasfx.VDataBase to javafx.fxml;
-    exports com.example.damasfx.Enumerados;
-    exports com.example.damasfx.Gestion;
+    exports com.example.damasfx.Controllers;
+    exports com.example.damasfx.Models;
+    opens com.example.damasfx.Controllers to javafx.fxml;
+    exports com.example.damasfx.Services;
+    opens com.example.damasfx.Services to javafx.fxml;
+    exports com.example.damasfx.Enums;
+    exports com.example.damasfx.Utils;
 }

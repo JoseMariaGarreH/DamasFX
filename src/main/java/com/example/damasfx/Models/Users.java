@@ -1,7 +1,7 @@
-package com.example.damasfx.Modelo;
+package com.example.damasfx.Models;
 
-import com.example.damasfx.Enumerados.ResidenceCountry;
-import com.example.damasfx.Enumerados.RoleType;
+import com.example.damasfx.Enums.ResidenceCountry;
+import com.example.damasfx.Enums.RoleType;
 import org.bson.types.ObjectId;
 
 import java.util.Date;
