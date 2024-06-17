@@ -58,9 +58,9 @@ public class RegisterController implements Initializable {
         // Inicializar el patrón de correo electrónico
         emailPattern = Pattern.compile(properties.getProperty("email_pattern"));
 
-        // Deshabilitar la edición manual del campo de fecha
+        // Deshabilitar la edición del campo de fecha
         inputDate.getEditor().addEventFilter(KeyEvent.ANY, Event::consume);
-        // Establecer la nacionalidad por defecto y la lista de nacionalidades en el ComboBox
+        // Establecer nacionalidad vacía por defecto y la lista de nacionalidades en el ComboBox
         inputNacionality.setValue(ResidenceCountry.EMPTY);
         inputNacionality.setItems(nacionalities);
         inputNacionality.setVisibleRowCount(3);
@@ -72,7 +72,6 @@ public class RegisterController implements Initializable {
             InputStream input = RegisterController.class.getClassLoader().getResourceAsStream("general.properties");
             properties.load(input);
         } catch (IOException ex) {
-            // Registrar un mensaje de error si no se puede cargar el archivo de propiedades
             logger.error("Error cargando fichero de propiedades", ex);
         }
     }
@@ -223,7 +222,6 @@ public class RegisterController implements Initializable {
         alert.showAndWait();
     }
 
-    // Método para manejar el evento de regresar a la pantalla anterior
     @FXML
     public void comeBack(ActionEvent event) {
         // Comprobamos si el usuario esta logueado, si no lo estuviera entonces lanzaría

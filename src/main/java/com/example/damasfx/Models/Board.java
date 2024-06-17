@@ -11,7 +11,6 @@ public class Board extends StackPane {
     private Piece piece; // Pieza contenida en la casilla, si la hay
     private static final int WIDTH = 125; // Ancho de la casilla
     private static final int HEIGHT = 120; // Alto de la casilla
-    private boolean isSelected; // Indica si la casilla está seleccionada
     private PlayController playController; // Controlador para gestionar eventos de clic
     private ImageView invalidMove; // Icono que indica un movimiento inválido
 
@@ -60,19 +59,17 @@ public class Board extends StackPane {
 
     // Método para remover la pieza de la casilla
     public void removePiece() {
-        getChildren().remove(piece); // Remueve la pieza de los hijos de la casilla
+        getChildren().remove(piece); // Remueve la pieza de la casilla
         piece = null; // Establece la referencia de la pieza a null
     }
 
     // Método para resaltar la casilla
     public void highlight() {
-        isSelected = true; // Marca la casilla como seleccionada
         setOpacity(0.5); // Cambia la opacidad para resaltar
     }
 
     // Método para quitar el resaltado de la casilla
     public void clearHighlight() {
-        isSelected = false; // Desmarca la casilla como seleccionada
         setOpacity(1.0); // Restaura la opacidad original
     }
 

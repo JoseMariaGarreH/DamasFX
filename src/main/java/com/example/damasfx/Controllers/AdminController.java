@@ -96,10 +96,10 @@ public class AdminController implements Initializable {
             Scene scene = new Scene(loader.load());
             Stage stage = new Stage();
 
-            // Establecer icono y configuración de la ventana
             Image icon = new Image(getClass().getResourceAsStream(properties.getProperty("application_icon")));
             stage.getIcons().add(icon);
             stage.setResizable(false);
+            // Define que esta ventana es modal, bloqueando la interacción con otras ventanas hasta que se cierre
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(scene);
             stage.showAndWait();
@@ -141,13 +141,12 @@ public class AdminController implements Initializable {
                 // Obtiene el controlador de la ventana cargada y configura el tipo de acción a MODIFICAR
                 WindowController windowController = loader.getController();
                 windowController.setActionType(ActionType.MODIFICAR); // Define la acción que se va a realizar
-                windowController.initAttributes(u); // Inicializa los atributos del controlador con los datos del usuario seleccionado
+                windowController.initAttributes(u);
 
                 // Crear una nueva escena con el contenido cargado
                 Scene scene = new Scene(root);
                 Stage stage = new Stage();
 
-                // Establecer el icono de la aplicación para la nueva ventana
                 Image icon = new Image(getClass().getResourceAsStream(properties.getProperty("application_icon")));
                 stage.getIcons().add(icon);
                 stage.setResizable(false);

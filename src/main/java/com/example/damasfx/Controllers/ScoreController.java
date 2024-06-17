@@ -1,5 +1,6 @@
 package com.example.damasfx.Controllers;
 
+import com.example.damasfx.Services.DataBase;
 import com.example.damasfx.Utils.SceneLoader;
 import com.example.damasfx.Utils.UserManagement;
 import com.example.damasfx.Models.Users;
@@ -40,10 +41,10 @@ public class ScoreController implements Initializable {
     @FXML
     private TableColumn<Users, String> rankingColumn;  // Columna de la tabla para el ranking
 
-    // Gestión de usuarios
-    private UserManagement userCollection;
-    // Propiedades para cargar configuraciones
-    private Properties properties = new Properties();
+
+    private UserManagement userCollection = DataBase.getInstance().getUserCollection();; // Gestión de usuarios
+
+    private Properties properties = new Properties(); // Propiedades para cargar configuraciones
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -51,7 +52,6 @@ public class ScoreController implements Initializable {
 
         // Gestionar la sesión del usuario
         UserManagement sessionManagement = new UserManagement();
-        userCollection = new UserManagement();  // Inicializar correctamente userCollection
         userCollection.setCurrentUser(userCollection.getUserById(sessionManagement.getLoggedInUser()));
 
         // Obtener el usuario actual y actualizar las etiquetas de nombre y puntaje
@@ -73,9 +73,9 @@ public class ScoreController implements Initializable {
         });
 
         // Establecer los datos en la tabla
-        scoreTable.setItems(FXCollections.observableArrayList(userCollection.getUserCollection()));
+        scoreTable.setItems(userCollection.getUserCollection());
 
-        // Ordenar la tabla por puntaje en orden descendente
+        // Ordenar la tabla por puntaje en orden descendente cuando inicie la ventana
         scoreColumn.setSortType(TableColumn.SortType.DESCENDING);
         scoreTable.getSortOrder().add(scoreColumn);
         scoreTable.sort();
@@ -93,9 +93,7 @@ public class ScoreController implements Initializable {
      // Método para manejar el evento de salida. Cambia la vista a la del menú principal.
     @FXML
     public void exit(ActionEvent event){
-        // Registrar un mensaje de información cuando el usuario entra al menú principal
         logger.info("El usuario ha entrado al menu principal");
-        // Cargar la escena del menú principal usando SceneLoader
         SceneLoader.loadScene(properties.getProperty("menu_view"), event);
     }
 }

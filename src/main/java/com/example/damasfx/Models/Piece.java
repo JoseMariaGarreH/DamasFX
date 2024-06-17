@@ -16,7 +16,7 @@ public class Piece extends StackPane {
 
     public Piece(PieceType type) {
         this.type = type; // Asigna el tipo de la pieza
-        this.isKing = false; // Inicialmente, la pieza no es un rey
+        this.isKing = false; // Al principio la pieza no es un rey
 
         // Crea un círculo para representar la pieza
         Circle circle = new Circle(100 * 0.4);

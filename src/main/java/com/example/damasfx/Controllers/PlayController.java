@@ -47,7 +47,7 @@ public class PlayController implements Initializable {
     private static int movesWithoutCapture = 0; // Variable que cuenta el número de movimientos realizados sin ninguna captura
     private static Board selectedSquare = null; // Referencia a la casilla actualmente seleccionada en el tablero,
     // inicializada como null para indicar que no hay ninguna seleccionada al inicio
-    private static PieceType currentPlayer = PieceType.RED; // Variable que indica el jugador actual, por defecto es rojo
+    private static PieceType currentPlayer = PieceType.RED; // Variable que indica el jugador actual que por defecto es rojo
     private UserManagement userCollection = DataBase.getInstance().getUserCollection(); // Gestión de usuarios
     private Properties properties = new Properties(); // Propiedades cargadas desde un archivo de configuración
 
@@ -98,9 +98,9 @@ public class PlayController implements Initializable {
 
 
     private void chargePieces() {
-        // Itera sobre todas las filas del tablero
+        // Recorre sobre todas las filas del tablero
         for (int y = 0; y < HEIGHT; y++) {
-            // Itera sobre todas las columnas del tablero
+            // Recorre sobre todas las columnas del tablero
             for (int x = 0; x < WIDTH; x++) {
                 // Comprueba si la celda está en un cuadro oscuro y si está en las primeras 3 filas
                 if ((x + y) % 2 != 0 && y < 3) {
@@ -158,10 +158,10 @@ public class PlayController implements Initializable {
             // Coloca la pieza en la casilla destino
             to.setPiece(piece);
 
-            // Comprueba si se ha capturado una pieza (movimiento de dos casillas)
+            // Comprueba si se ha capturado una pieza
             boolean captured = Math.abs(toX - fromX) == 2 && Math.abs(toY - fromY) == 2;
             if (captured) {
-                // Calcula las coordenadas de la casilla intermedia (donde estaba la pieza capturada)
+                // Calcula las coordenadas de la casilla intermedia
                 int middleX = (fromX + toX) / 2;
                 int middleY = (fromY + toY) / 2;
                 // Remueve la pieza capturada de la casilla intermedia
@@ -179,7 +179,7 @@ public class PlayController implements Initializable {
                 piece.setKing(true); // Establece la pieza como rey
             }
 
-            // Limpia la selección y el resaltado de la casilla origen
+            // Limpia la selección y el resaltado de la casilla
             from.clearHighlight();
             selectedSquare = null;
 
@@ -219,12 +219,11 @@ public class PlayController implements Initializable {
         }
     }
 
-    // Método para verificar si un movimiento de una casilla 'from' a una casilla 'to' es válido
     private boolean isValidMove(Board from, Board to) {
-        // Obtiene las coordenadas de la casilla 'from'
+        // Obtiene las coordenadas de la casilla que esta actualmente
         int fromX = GridPane.getColumnIndex(from);
         int fromY = GridPane.getRowIndex(from);
-        // Obtiene las coordenadas de la casilla 'to'
+        // Obtiene las coordenadas de la casilla a la que se va a dirigir
         int toX = GridPane.getColumnIndex(to);
         int toY = GridPane.getRowIndex(to);
 
@@ -287,7 +286,7 @@ public class PlayController implements Initializable {
         int[] dx = {-2, -2, 2, 2};
         int[] dy = {-2, 2, -2, 2};
 
-        // Repite sobre las cuatro posibles direcciones de captura
+        // Recorre sobre las cuatro posibles direcciones de captura
         for (int i = 0; i < 4; i++) {
             // Calcula las coordenadas de la casilla de destino para un posible movimiento de captura
             int toX = x + dx[i];
@@ -316,14 +315,14 @@ public class PlayController implements Initializable {
         // Verificar si el jugador actual tiene movimientos válidos
         if (!hasValidMoves(currentPlayer)) {
             showWinner(currentPlayer == PieceType.RED ? PieceType.WHITE : PieceType.RED);
-            return; // Termina el turno ya que el juego ha concluido
+            return; // Termina el turno
         }
 
         // Verificar si el oponente tiene movimientos válidos
         PieceType opponent = (currentPlayer == PieceType.RED) ? PieceType.WHITE : PieceType.RED;
         if (!hasValidMoves(opponent)) {
             showWinner(currentPlayer); // Si el oponente no tiene movimientos válidos, el jugador actual gana
-            return; // Termina el turno ya que el juego ha concluido
+            return; // Termina el turno
         }
 
         checkForDraw();
@@ -335,22 +334,18 @@ public class PlayController implements Initializable {
         // Para el manejo del cambio de turnos, si el jugador actual es el rojo, se coloreará de color rojo
         // En caso contrario coloreará de color blanco si el jugador actual es el blanco
         turnIndicatorCircle.setFill((currentPlayer == PieceType.RED ? Color.RED : Color.WHITE));
-        // También se cambiará el texto segun el turno que sea, igual que los circulos.
+        // También se cambiará el texto según el turno que sea, igual que los circulos.
         turnIndicatorLabel.setText("Turno: " + (currentPlayer == PieceType.RED ? "Rojo" : "Blanco"));
     }
 
+    // Método que muestra el empate
     private void showDraw() {
-        // Crea una nueva alerta de tipo información
+        // Crea una nueva alerta
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        // Establece el título de la alerta
         alert.setTitle("Empate");
-        // Establece el encabezado de la alerta como nulo (sin encabezado)
         alert.setHeaderText(null);
+        alert.setContentText("Empate, se reparten los puntos y cada uno gana 1 punto");
 
-        // Establece el contenido del mensaje de la alerta
-        alert.setContentText("Empate");
-
-        // Crea un nuevo ImageView con un ícono de imagen desde el recurso especificado
         ImageView icon = new ImageView(new Image(getClass().getResourceAsStream("/com/example/damasfx/img/apreton.png")));
         icon.setFitHeight(64);
         icon.setFitWidth(64);
@@ -363,24 +358,24 @@ public class PlayController implements Initializable {
     }
 
     private boolean hasValidMoves(PieceType player) {
-        // Itera sobre todas las filas del tablero.
+        // Recorre sobre todas las filas del tablero.
         for (int y = 0; y < HEIGHT; y++) {
-            // Rep sobre todas las columnas del tablero.
+            // Recorre sobre todas las columnas del tablero.
             for (int x = 0; x < WIDTH; x++) {
                 // Obtiene la casilla actual del tablero.
                 Board square = board[x][y];
                 // Obtiene la pieza en la casilla actual.
                 Piece piece = square.getPiece();
 
-                // Si hay una pieza en la casilla actual y es del tipo del jugador.
+                // Si hay una pieza en la casilla actual y es del tipo del jugador
                 if (piece != null && piece.getType() == player) {
-                    // Define los posibles movimientos de la pieza en términos de cambios en x e y.
+                    // Define los posibles movimientos de la pieza
                     int[] dx = {-1, -1, 1, 1, -2, -2, 2, 2};
                     int[] dy = {-1, 1, -1, 1, -2, 2, -2, 2};
 
-                    // Recorre todos los movimientos posibles.
+                    // Recorre todos los movimientos posibles
                     for (int i = 0; i < 8; i++) {
-                        // Calcula las nuevas coordenadas de destino.
+                        // Calcula las nuevas coordenadas de destino
                         int toX = x + dx[i];
                         int toY = y + dy[i];
 
@@ -413,13 +408,13 @@ public class PlayController implements Initializable {
 
         // Si no quedan piezas rojas, el jugador con piezas blancas gana
         if (redPieces == 0) {
-            // Actualiza los puntajes, otorgando puntos al jugador con piezas blancas
+            // Actualiza la puntuación, dandole puntos al jugador con piezas blancas
             updateScores(PieceType.WHITE);
             // Muestra un mensaje indicando que el jugador con piezas blancas ha ganado
             showWinner(PieceType.WHITE);
             // Si no quedan piezas blancas, el jugador con piezas rojas gana
         } else if (whitePieces == 0) {
-            // Actualiza los puntajes, otorgando puntos al jugador con piezas rojas
+            // Actualiza la puntuación, dandole puntos al jugador con piezas rojas
             updateScores(PieceType.RED);
             // Muestra un mensaje indicando que el jugador con piezas rojas ha ganado
             showWinner(PieceType.RED);
@@ -432,33 +427,33 @@ public class PlayController implements Initializable {
         Users firstUser = userCollection.getFirstUser();
         Users secondUser = userCollection.getSecondUser();
 
-        // Obtiene los puntajes actuales de los usuarios
+        // Obtiene los puntos actuales de los usuarios
         int firstUserScore = firstUser.getScore();
         int secondUserScore = secondUser.getScore();
 
         // Si el ganador es el jugador con piezas blancas
         if (winner == PieceType.WHITE) {
-            // Incrementa el puntaje del primer usuario en 3 puntos
+            // Incrementa los puntos del primer usuario en 3 puntos
             firstUserScore = firstUserScore + 3;
-            // Decrementa el puntaje del segundo usuario en 1 punto (En caso de que sea negativo coge el más grande)
+            // Decrementa los puntos del segundo usuario en 1 punto (En caso de que sea negativo coge el más grande)
             secondUserScore = Math.max(0, secondUserScore - 1);
             // Si el ganador es el jugador con piezas rojas
         } else if (winner == PieceType.RED) {
-            // Decrementa el puntaje del primer usuario en 1 punto (En caso de que sea negativo coge el más grande)
+            // Decrementa los puntos del primer usuario en 1 punto (En caso de que sea negativo coge el más grande)
             firstUserScore = Math.max(0, firstUserScore - 1);
-            // Incrementa el puntaje del segundo usuario en 3 puntos
+            // Incrementa los puntos del segundo usuario en 3 puntos
             secondUserScore = secondUserScore + 3;
         }else{
-            // Incrementa el puntuaje de los dos usuarios a 1 en caso de empate
+            // Incrementa los puntos de los dos usuarios a 1 en caso de empate
             firstUserScore = firstUserScore + 1;
             secondUserScore = secondUserScore + 1;
         }
 
-        // Establece los nuevos puntajes para los usuarios
+        // Establece los nuevos puntos para los usuarios
         firstUser.setScore(firstUserScore);
         secondUser.setScore(secondUserScore);
 
-        // Modifica los usuarios en la colección para reflejar los nuevos puntajes
+        // Modifica los usuarios en la colección para que reflejen en la tabla
         userCollection.modifyUser(firstUser);
         userCollection.modifyUser(secondUser);
     }
@@ -467,11 +462,11 @@ public class PlayController implements Initializable {
     private int countPieces(PieceType type) {
         int count = 0; // Inicializa el contador a 0
 
-        // Itera sobre todas las filas del tablero
+        // Recorre sobre todas las filas del tablero
         for (int y = 0; y < HEIGHT; y++) {
-            // Itera sobre todas las columnas del tablero
+            // Recorre sobre todas las columnas del tablero
             for (int x = 0; x < WIDTH; x++) {
-                // Verifica si la casilla en la posición (x, y) tiene una pieza
+                // Verifica si la casilla en las posiciones x e y tienen una pieza
                 if (board[x][y].hasPiece() && board[x][y].getPiece().getType() == type) {
                     count++; // Incrementa el contador si la pieza es del tipo especificado
                 }
@@ -486,6 +481,7 @@ public class PlayController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Victoria");
 
+        // si el ganador es el rojo muestra mensaje para jugador rojo, si fuera al contrario para el blanco
         String winnerText = (winner == PieceType.RED) ? "Rojas han ganado se llevan 3 puntos y las Blancas pierden 1 punto" : "Blancas han ganado se llevan 3 puntos y las Rojas pierden 1 punto";
         alert.setContentText("¡Las fichas " + winnerText + "!");
 
@@ -494,18 +490,20 @@ public class PlayController implements Initializable {
         icon.setFitWidth(64);
         alert.setGraphic(icon);
 
+        // Para la vista hasta que el usuario presione al botón aceptar
         alert.showAndWait();
+        // Retablece el juego
         resetGame();
     }
 
 
 
     private void resetGame() {
-        // Itera sobre todas las filas del tablero
+        // Recorre sobre todas las filas del tablero
         for (int y = 0; y < HEIGHT; y++) {
-            // Itera sobre todas las columnas del tablero
+            // Recorre sobre todas las columnas del tablero
             for (int x = 0; x < WIDTH; x++) {
-                // Remueve la pieza de la casilla en la posición (x, y)
+                // Remueve la pieza de la casilla en la posición x e y
                 board[x][y].removePiece();
             }
         }
@@ -518,7 +516,7 @@ public class PlayController implements Initializable {
         updateTurnIndicator();
     }
 
-    // Método que renícia el tablero, y lo vuelve al estado inicial
+    // Método que renicia el tablero, y lo vuelve al estado inicial
     @FXML
     public void onReset(ActionEvent event) {
         if(selectedSquare != null) {

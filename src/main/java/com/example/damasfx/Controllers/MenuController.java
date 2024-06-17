@@ -43,13 +43,12 @@ public class MenuController implements Initializable {
     }
 
 
-
+    // Método para cargar las propiedades desde un archivo de configuración
     private void loadProperties() {
         try {
             InputStream input = SecondUserController.class.getClassLoader().getResourceAsStream("general.properties");
             properties.load(input);
         } catch (IOException ex) {
-            // Registrar un mensaje de error si no se puede cargar el archivo de propiedades
             logger.error("Error cargando fichero de propiedades", ex);
         }
     }

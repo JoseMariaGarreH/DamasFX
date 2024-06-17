@@ -37,9 +37,10 @@ public class SecondUserController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadProperties();
-        // Asigna un evento para la tecla Enter en los campos de texto
+        // Cargamos al primer usuario
         UserManagement sesionManagement = new UserManagement();
         userCollection.setFirstUser(userCollection.getUserById(sesionManagement.getLoggedInUser()));
+        // Introducimos eventos para la tecla enter en los siguientes campos
         txtAccount.setOnKeyPressed(this::handleEnterKey);
         txtPasswordVisible.setOnKeyPressed(this::handleEnterKey);
         txtPasswordNotVisible.setOnKeyPressed(this::handleEnterKey);

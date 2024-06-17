@@ -139,11 +139,11 @@ public class WindowController implements Initializable {
         if (actionType == ActionType.GUARDAR) {
             btnChange.setVisible(false);
         }
-        // Si el tipo de acción es MODIFICAR, ajusta la visibilidad y la habilitación
-        // de los campos basádo en el rol del usuario actual
+        // Si el tipo de acción es MODIFICAR, ajusta la visibilidad, según si el rol del usuario
+        // es administrador o creador
         else if (actionType == ActionType.MODIFICAR) {
             if (userCollection.getCurrentUser().getRoleType() == RoleType.ADMINISTRADOR) {
-                // Si el rol es ADMINISTRADOR, deshabilita ciertos campos y oculta el botón de cambiar
+                // Si el rol es ADMINISTRADOR, deshabilita los campos siguientes
                 inputPassword.setDisable(true);
                 inputAccount.setDisable(true);
                 inputEmail.setDisable(true);
@@ -157,12 +157,10 @@ public class WindowController implements Initializable {
                 btnChange.setVisible(true);
             }
         }
-        // Si no es ninguno de los anteriores, muestra el botón de cambiar
-        else {
+        else { // Si no es ninguno de los anteriores, muestra el botón de cambiar
             btnChange.setVisible(true);
         }
     }
-
 
     private void resetFieldStyles() {
         // Resetea estilos del login
@@ -269,7 +267,7 @@ public class WindowController implements Initializable {
         return !originalUser.equals(currentUser);
     }
 
-    private boolean checkUserEmail(Users user) {
+    private boolean isUserValid(Users user) {
         boolean hasError = false;
         // Verifica si el usuario ya existe en la colección
         if (!userCollection.verifyUser(user)) {
@@ -307,7 +305,7 @@ public class WindowController implements Initializable {
         newUser.setScore(0);
 
         // Verifica si el usuario o el email ya existen en la colección
-        if (checkUserEmail(newUser)) {
+        if (isUserValid(newUser)) {
             currentUser = newUser; // Asigna el nuevo usuario a currentUser si no hay errores
             return true;
         }
@@ -328,13 +326,13 @@ public class WindowController implements Initializable {
         return (localDate != null) ? Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant()) : new Date();
     }
 
+    // Método para mostrar una alerta
     private void showAlert(Alert.AlertType alertType, String title, String content) {
-        // Crea una nueva alerta con el tipo especificado
         Alert alert = new Alert(alertType);
-        alert.setHeaderText(null); // Elimina el encabezado
-        alert.setTitle(title); // Establece el título de la alerta
-        alert.setContentText(content); // Establece el contenido de la alerta
-        alert.showAndWait(); // Muestra la alerta y espera a que el usuario la cierre
+        alert.setHeaderText(null);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
     @FXML
